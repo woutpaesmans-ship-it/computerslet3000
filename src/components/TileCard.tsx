@@ -32,6 +32,24 @@ export const TileCard = ({ tile, onEdit, onDelete }: TileCardProps) => {
     opacity: isDragging ? 0.5 : 1,
   };
 
+  const sanitizeToAscii = (text: string): string => {
+    return text
+      // Replace smart quotes with regular quotes
+      .replace(/[""]/g, '"')
+      .replace(/['']/g, "'")
+      // Replace em/en dashes with regular hyphens
+      .replace(/[—–]/g, '-')
+      // Replace non-breaking spaces with regular spaces
+      .replace(/\u00A0/g, ' ')
+      // Replace various bullet points with asterisk
+      .replace(/[•·‧∙]/g, '*')
+      // Remove emojis and other non-ASCII characters
+      .replace(/[^\x00-\x7F]/g, '')
+      // Clean up multiple spaces
+      .replace(/\s+/g, ' ')
+      .trim();
+  };
+
   const copyTileContent = async (e: React.MouseEvent) => {
     e.stopPropagation();
     
@@ -43,7 +61,7 @@ export const TileCard = ({ tile, onEdit, onDelete }: TileCardProps) => {
         <head>
           <meta charset="utf-8">
           <style>
-            body { font-family: Arial, sans-serif; line-height: 1.6; }
+            body { font-family: Arial, sans-serif; line-height: 1.6; margin: 0; }
             a { color: #0066cc; text-decoration: none; }
             a:hover { text-decoration: underline; }
           </style>
@@ -54,37 +72,82 @@ export const TileCard = ({ tile, onEdit, onDelete }: TileCardProps) => {
         </html>
       `;
       
-      // Create plain text fallback
+      // Create UTF-8 plain text version
       const tempDiv = document.createElement('div');
       tempDiv.innerHTML = tile.content;
-      const plainText = tempDiv.textContent || tempDiv.innerText || '';
+      const utf8Text = tempDiv.textContent || tempDiv.innerText || '';
       
-      // Write both formats to clipboard
-      await navigator.clipboard.write([
-        new ClipboardItem({
-          'text/html': new Blob([htmlContent], { type: 'text/html' }),
-          'text/plain': new Blob([plainText], { type: 'text/plain' })
-        })
-      ]);
+      // Create ASCII-safe version for old applications
+      const asciiText = sanitizeToAscii(utf8Text);
+      
+      // Try to write multiple formats to clipboard
+      const clipboardItems = [];
+      
+      // Add HTML format
+      clipboardItems.push({
+        'text/html': new Blob([htmlContent], { type: 'text/html' })
+      });
+      
+      // Add UTF-8 plain text
+      clipboardItems.push({
+        'text/plain': new Blob([utf8Text], { type: 'text/plain' })
+      });
+      
+      // Try modern clipboard API with multiple formats
+      if (navigator.clipboard && navigator.clipboard.write) {
+        await navigator.clipboard.write([
+          new ClipboardItem({
+            'text/html': new Blob([htmlContent], { type: 'text/html' }),
+            'text/plain': new Blob([utf8Text], { type: 'text/plain' })
+          })
+        ]);
+        
+        // Also try to set ASCII version as fallback
+        try {
+          await navigator.clipboard.writeText(asciiText);
+        } catch {
+          // Ignore if this fails
+        }
+      } else {
+        throw new Error('Modern clipboard API not available');
+      }
       
       toast({
         title: "✓ Tekst gekopieerd",
-        description: "HTML en platte tekst zijn naar het klembord gekopieerd",
+        description: "Meerdere formaten naar klembord gekopieerd (HTML, UTF-8, ASCII)",
       });
     } catch (err) {
-      console.error('Failed to copy:', err);
-      // Fallback to basic text copy if rich copy fails
-      const tempInput = document.createElement('textarea');
-      tempInput.value = tile.content.replace(/<br\s*[\/]?>/gi, '\n').replace(/<[^>]+>/g, '');
-      document.body.appendChild(tempInput);
-      tempInput.select();
-      document.execCommand("copy");
-      document.body.removeChild(tempInput);
+      console.error('Failed to copy with modern API:', err);
       
-      toast({
-        title: "✓ Tekst gekopieerd",
-        description: "Platte tekst is naar het klembord gekopieerd",
-      });
+      // Fallback to legacy copy methods
+      try {
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = tile.content;
+        const plainText = tempDiv.textContent || tempDiv.innerText || '';
+        const asciiSafeText = sanitizeToAscii(plainText);
+        
+        // Use legacy execCommand as fallback
+        const tempInput = document.createElement('textarea');
+        tempInput.value = asciiSafeText;
+        tempInput.style.position = 'absolute';
+        tempInput.style.left = '-9999px';
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand("copy");
+        document.body.removeChild(tempInput);
+        
+        toast({
+          title: "✓ Tekst gekopieerd",
+          description: "ASCII-veilige tekst naar klembord gekopieerd",
+        });
+      } catch (fallbackErr) {
+        console.error('All copy methods failed:', fallbackErr);
+        toast({
+          title: "Kopiëren mislukt",
+          description: "Kon tekst niet naar klembord kopiëren",
+          variant: "destructive"
+        });
+      }
     }
   };
 
