@@ -61,6 +61,14 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				tile: {
+					red: 'hsl(var(--tile-red))',
+					blue: 'hsl(var(--tile-blue))',
+					green: 'hsl(var(--tile-green))',
+					yellow: 'hsl(var(--tile-yellow))',
+					purple: 'hsl(var(--tile-purple))',
+					gray: 'hsl(var(--tile-gray))'
 				}
 			},
 			borderRadius: {
