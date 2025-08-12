@@ -92,9 +92,11 @@ export const TileCard = ({ tile, onEdit, onDelete }: TileCardProps) => {
     e.stopPropagation();
     
     try {
-      // Convert HTML to plain text first
+      // Convert HTML to plain text with proper line breaks
       const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = tile.content;
+      // First replace <br> tags with newlines before converting to text
+      const htmlWithLineBreaks = tile.content.replace(/<br\s*\/?>/gi, '\n');
+      tempDiv.innerHTML = htmlWithLineBreaks;
       const plainText = tempDiv.textContent || tempDiv.innerText || '';
       
       let smsText = plainText;
@@ -112,8 +114,8 @@ export const TileCard = ({ tile, onEdit, onDelete }: TileCardProps) => {
         .replace(/\t/g, ' ') // Replace tabs with spaces
         .replace(/[^\x00-\x7F]/g, ''); // Remove non-ASCII characters
       
-      // Clean up multiple spaces
-      smsText = smsText.replace(/\s+/g, ' ').trim();
+      // Clean up multiple spaces but preserve line breaks
+      smsText = smsText.replace(/[ \t]+/g, ' ').replace(/\n+/g, '\n').trim();
       
       // Check if text was modified
       if (smsText !== originalText) {
