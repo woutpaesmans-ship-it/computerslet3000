@@ -54,39 +54,100 @@ export const TileCard = ({ tile, onEdit, onDelete }: TileCardProps) => {
         </html>
       `;
       
-      // Create plain text fallback with proper line breaks
+      // Create plain text with proper line breaks
       const tempDiv = document.createElement('div');
-      // First replace <br> tags with newlines before converting to text
       const htmlWithLineBreaks = tile.content.replace(/<br\s*\/?>/gi, '\n');
       tempDiv.innerHTML = htmlWithLineBreaks;
       const plainText = tempDiv.textContent || tempDiv.innerText || '';
       
-      // Write both formats to clipboard
+      // Create Markdown version (modern structured text)
+      let markdownText = tile.content
+        .replace(/<br\s*\/?>/gi, '\n')
+        .replace(/<strong>(.*?)<\/strong>/gi, '**$1**')
+        .replace(/<b>(.*?)<\/b>/gi, '**$1**')
+        .replace(/<em>(.*?)<\/em>/gi, '*$1*')
+        .replace(/<i>(.*?)<\/i>/gi, '*$1*')
+        .replace(/<a href="([^"]*)"[^>]*>(.*?)<\/a>/gi, '[$2]($1)')
+        .replace(/<h1>(.*?)<\/h1>/gi, '# $1\n')
+        .replace(/<h2>(.*?)<\/h2>/gi, '## $1\n')
+        .replace(/<h3>(.*?)<\/h3>/gi, '### $1\n')
+        .replace(/<p>(.*?)<\/p>/gi, '$1\n\n')
+        .replace(/<[^>]+>/g, ''); // Remove remaining HTML tags
+      
+      // Create RTF version (Rich Text Format - widely supported)
+      const rtfContent = `{\\rtf1\\ansi\\deff0 {\\fonttbl {\\f0 Times New Roman;}}\\f0\\fs24 ${plainText.replace(/\n/g, '\\par ')}}`;
+      
+      // Try modern clipboard API with multiple formats
       await navigator.clipboard.write([
         new ClipboardItem({
           'text/html': new Blob([htmlContent], { type: 'text/html' }),
-          'text/plain': new Blob([plainText], { type: 'text/plain' })
+          'text/plain': new Blob([plainText], { type: 'text/plain' }),
+          'text/markdown': new Blob([markdownText], { type: 'text/markdown' }),
+          'text/rtf': new Blob([rtfContent], { type: 'text/rtf' })
         })
       ]);
       
       toast({
         title: "✓ Tekst gekopieerd",
-        description: "HTML en platte tekst zijn naar het klembord gekopieerd",
+        description: "Meerdere formaten: HTML, Markdown, RTF, plain text",
       });
     } catch (err) {
-      console.error('Failed to copy:', err);
-      // Fallback to basic text copy if rich copy fails
-      const tempInput = document.createElement('textarea');
-      tempInput.value = tile.content.replace(/<br\s*[\/]?>/gi, '\n').replace(/<[^>]+>/g, '');
-      document.body.appendChild(tempInput);
-      tempInput.select();
-      document.execCommand("copy");
-      document.body.removeChild(tempInput);
-      
-      toast({
-        title: "✓ Tekst gekopieerd",
-        description: "Platte tekst is naar het klembord gekopieerd",
-      });
+      console.error('Failed to copy with modern API:', err);
+      // Fallback to basic HTML + plain text
+      try {
+        // Recreate variables for fallback scope
+        const htmlContent = `
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <meta charset="utf-8">
+            <style>
+              body { font-family: Arial, sans-serif; line-height: 1.6; }
+              a { color: #0066cc; text-decoration: none; }
+              a:hover { text-decoration: underline; }
+            </style>
+          </head>
+          <body>
+            ${tile.content}
+          </body>
+          </html>
+        `;
+        
+        const tempDiv = document.createElement('div');
+        const htmlWithLineBreaks = tile.content.replace(/<br\s*\/?>/gi, '\n');
+        tempDiv.innerHTML = htmlWithLineBreaks;
+        const plainText = tempDiv.textContent || tempDiv.innerText || '';
+        
+        await navigator.clipboard.write([
+          new ClipboardItem({
+            'text/html': new Blob([htmlContent], { type: 'text/html' }),
+            'text/plain': new Blob([plainText], { type: 'text/plain' })
+          })
+        ]);
+        
+        toast({
+          title: "✓ Tekst gekopieerd",
+          description: "HTML en plain text gekopieerd",
+        });
+      } catch (fallbackErr) {
+        // Ultimate fallback
+        const tempDiv = document.createElement('div');
+        const htmlWithLineBreaks = tile.content.replace(/<br\s*\/?>/gi, '\n');
+        tempDiv.innerHTML = htmlWithLineBreaks;
+        const plainText = tempDiv.textContent || tempDiv.innerText || '';
+        
+        const tempInput = document.createElement('textarea');
+        tempInput.value = plainText;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand("copy");
+        document.body.removeChild(tempInput);
+        
+        toast({
+          title: "✓ Tekst gekopieerd",
+          description: "Plain text gekopieerd",
+        });
+      }
     }
   };
 
