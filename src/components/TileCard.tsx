@@ -54,9 +54,11 @@ export const TileCard = ({ tile, onEdit, onDelete }: TileCardProps) => {
         </html>
       `;
       
-      // Create plain text fallback
+      // Create plain text fallback with proper line breaks
       const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = tile.content;
+      // First replace <br> tags with newlines before converting to text
+      const htmlWithLineBreaks = tile.content.replace(/<br\s*\/?>/gi, '\n');
+      tempDiv.innerHTML = htmlWithLineBreaks;
       const plainText = tempDiv.textContent || tempDiv.innerText || '';
       
       // Write both formats to clipboard
