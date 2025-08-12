@@ -36,23 +36,13 @@ export const TileCard = ({ tile, onEdit, onDelete }: TileCardProps) => {
     e.stopPropagation();
     
     try {
-      // Create HTML content with proper formatting
-      const htmlContent = `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <meta charset="utf-8">
-          <style>
-            body { font-family: Arial, sans-serif; line-height: 1.6; }
-            a { color: #0066cc; text-decoration: none; }
-            a:hover { text-decoration: underline; }
-          </style>
-        </head>
-        <body>
-          ${tile.content}
-        </body>
-        </html>
-      `;
+      // Create clean HTML content optimized for Teams
+      const cleanedContent = tile.content
+        .replace(/\s+/g, ' ') // Replace multiple spaces with single space
+        .replace(/>\s+</g, '><') // Remove spaces between tags
+        .trim();
+      
+      const htmlContent = `<!DOCTYPE html><html><head><meta charset="utf-8"><style>body{font-family:Arial,sans-serif;line-height:1.6;margin:0;padding:0;}a{color:#0066cc;text-decoration:none;}a:hover{text-decoration:underline;}</style></head><body>${cleanedContent}</body></html>`;
       
       // Create plain text with proper line breaks
       const tempDiv = document.createElement('div');
