@@ -58,7 +58,9 @@ export const TileCard = ({ tile, onEdit, onDelete }: TileCardProps) => {
       const tempDiv = document.createElement('div');
       const htmlWithLineBreaks = tile.content.replace(/<br\s*\/?>/gi, '\n');
       tempDiv.innerHTML = htmlWithLineBreaks;
-      const plainText = tempDiv.textContent || tempDiv.innerText || '';
+      const rawText = tempDiv.textContent || tempDiv.innerText || '';
+      // Clean up extra whitespace while preserving line breaks
+      const plainText = rawText.replace(/[ \t]+/g, ' ').replace(/\n+/g, '\n').trim();
       
       // Create Markdown version (modern structured text)
       let markdownText = tile.content
