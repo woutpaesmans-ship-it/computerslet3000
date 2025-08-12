@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { GripVertical, Edit, Trash2 } from 'lucide-react';
+import { GripVertical, Edit, Trash2, MessageSquare } from 'lucide-react';
 
 interface TileCardProps {
   tile: Tile;
@@ -32,24 +32,6 @@ export const TileCard = ({ tile, onEdit, onDelete }: TileCardProps) => {
     opacity: isDragging ? 0.5 : 1,
   };
 
-  const sanitizeToAscii = (text: string): string => {
-    return text
-      // Replace smart quotes with regular quotes
-      .replace(/[""]/g, '"')
-      .replace(/['']/g, "'")
-      // Replace em/en dashes with regular hyphens
-      .replace(/[—–]/g, '-')
-      // Replace non-breaking spaces with regular spaces
-      .replace(/\u00A0/g, ' ')
-      // Replace various bullet points with asterisk
-      .replace(/[•·‧∙]/g, '*')
-      // Remove emojis and other non-ASCII characters
-      .replace(/[^\x00-\x7F]/g, '')
-      // Clean up multiple spaces
-      .replace(/\s+/g, ' ')
-      .trim();
-  };
-
   const copyTileContent = async (e: React.MouseEvent) => {
     e.stopPropagation();
     
@@ -61,7 +43,7 @@ export const TileCard = ({ tile, onEdit, onDelete }: TileCardProps) => {
         <head>
           <meta charset="utf-8">
           <style>
-            body { font-family: Arial, sans-serif; line-height: 1.6; margin: 0; }
+            body { font-family: Arial, sans-serif; line-height: 1.6; }
             a { color: #0066cc; text-decoration: none; }
             a:hover { text-decoration: underline; }
           </style>
@@ -72,82 +54,101 @@ export const TileCard = ({ tile, onEdit, onDelete }: TileCardProps) => {
         </html>
       `;
       
-      // Create UTF-8 plain text version
+      // Create plain text fallback
       const tempDiv = document.createElement('div');
       tempDiv.innerHTML = tile.content;
-      const utf8Text = tempDiv.textContent || tempDiv.innerText || '';
+      const plainText = tempDiv.textContent || tempDiv.innerText || '';
       
-      // Create ASCII-safe version for old applications
-      const asciiText = sanitizeToAscii(utf8Text);
-      
-      // Try to write multiple formats to clipboard
-      const clipboardItems = [];
-      
-      // Add HTML format
-      clipboardItems.push({
-        'text/html': new Blob([htmlContent], { type: 'text/html' })
-      });
-      
-      // Add UTF-8 plain text
-      clipboardItems.push({
-        'text/plain': new Blob([utf8Text], { type: 'text/plain' })
-      });
-      
-      // Try modern clipboard API with multiple formats
-      if (navigator.clipboard && navigator.clipboard.write) {
-        await navigator.clipboard.write([
-          new ClipboardItem({
-            'text/html': new Blob([htmlContent], { type: 'text/html' }),
-            'text/plain': new Blob([utf8Text], { type: 'text/plain' })
-          })
-        ]);
-        
-        // Also try to set ASCII version as fallback
-        try {
-          await navigator.clipboard.writeText(asciiText);
-        } catch {
-          // Ignore if this fails
-        }
-      } else {
-        throw new Error('Modern clipboard API not available');
-      }
+      // Write both formats to clipboard
+      await navigator.clipboard.write([
+        new ClipboardItem({
+          'text/html': new Blob([htmlContent], { type: 'text/html' }),
+          'text/plain': new Blob([plainText], { type: 'text/plain' })
+        })
+      ]);
       
       toast({
         title: "✓ Tekst gekopieerd",
-        description: "Meerdere formaten naar klembord gekopieerd (HTML, UTF-8, ASCII)",
+        description: "HTML en platte tekst zijn naar het klembord gekopieerd",
       });
     } catch (err) {
-      console.error('Failed to copy with modern API:', err);
+      console.error('Failed to copy:', err);
+      // Fallback to basic text copy if rich copy fails
+      const tempInput = document.createElement('textarea');
+      tempInput.value = tile.content.replace(/<br\s*[\/]?>/gi, '\n').replace(/<[^>]+>/g, '');
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand("copy");
+      document.body.removeChild(tempInput);
       
-      // Fallback to legacy copy methods
-      try {
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = tile.content;
-        const plainText = tempDiv.textContent || tempDiv.innerText || '';
-        const asciiSafeText = sanitizeToAscii(plainText);
-        
-        // Use legacy execCommand as fallback
-        const tempInput = document.createElement('textarea');
-        tempInput.value = asciiSafeText;
-        tempInput.style.position = 'absolute';
-        tempInput.style.left = '-9999px';
-        document.body.appendChild(tempInput);
-        tempInput.select();
-        document.execCommand("copy");
-        document.body.removeChild(tempInput);
-        
+      toast({
+        title: "✓ Tekst gekopieerd",
+        description: "Platte tekst is naar het klembord gekopieerd",
+      });
+    }
+  };
+
+  const copySmsVersion = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    
+    try {
+      // Convert HTML to plain text first
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = tile.content;
+      const plainText = tempDiv.textContent || tempDiv.innerText || '';
+      
+      let smsText = plainText;
+      let wasModified = false;
+      
+      // Track original for comparison
+      const originalText = smsText;
+      
+      // Replace typographic quotes and ligatures
+      smsText = smsText
+        .replace(/[""„]/g, '"')
+        .replace(/['']/g, "'")
+        .replace(/[—–]/g, '-')
+        .replace(/\u00A0/g, ' ') // Non-breaking space
+        .replace(/\t/g, ' ') // Replace tabs with spaces
+        .replace(/[^\x00-\x7F]/g, ''); // Remove non-ASCII characters
+      
+      // Clean up multiple spaces
+      smsText = smsText.replace(/\s+/g, ' ').trim();
+      
+      // Check if text was modified
+      if (smsText !== originalText) {
+        wasModified = true;
+      }
+      
+      // Limit to 1530 characters
+      if (smsText.length > 1530) {
+        smsText = smsText.substring(0, 1530);
+        wasModified = true;
+      }
+      
+      // Copy to clipboard
+      await navigator.clipboard.writeText(smsText);
+      
+      // Show appropriate toast
+      if (wasModified) {
         toast({
-          title: "✓ Tekst gekopieerd",
-          description: "ASCII-veilige tekst naar klembord gekopieerd",
-        });
-      } catch (fallbackErr) {
-        console.error('All copy methods failed:', fallbackErr);
-        toast({
-          title: "Kopiëren mislukt",
-          description: "Kon tekst niet naar klembord kopiëren",
+          title: "⚠️ Let op: de tekst werd aangepast",
+          description: `SMS-veilige versie gekopieerd (${smsText.length}/1530 tekens)`,
           variant: "destructive"
         });
+      } else {
+        toast({
+          title: "✓ De tegel is gekopieerd",
+          description: `SMS-veilige versie gekopieerd (${smsText.length}/1530 tekens)`,
+        });
       }
+    } catch (err) {
+      console.error('Failed to copy SMS version:', err);
+      toast({
+        title: "Kopiëren mislukt",
+        description: "Kon SMS-versie niet naar klembord kopiëren",
+        variant: "destructive"
+      });
     }
   };
 
@@ -179,6 +180,15 @@ export const TileCard = ({ tile, onEdit, onDelete }: TileCardProps) => {
         <div className="flex items-start justify-between mb-2">
           <h3 className="font-semibold text-sm text-card-foreground">{tile.title}</h3>
           <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-6 w-6 p-0"
+              onClick={copySmsVersion}
+              title="SMS-veilige versie kopiëren"
+            >
+              <MessageSquare className="h-3 w-3" />
+            </Button>
             <Button
               variant="ghost"
               size="sm"
