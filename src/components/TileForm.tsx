@@ -60,10 +60,18 @@ export const TileForm = ({ tile, onSubmit, onCancel, loading }: TileFormProps) =
 
   return (
     <Card className="mt-8">
-      <CardHeader>
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-lg">
           {tile ? '✏️ Tegel bewerken' : '➕ Nieuwe tegel toevoegen'}
         </CardTitle>
+        <Button 
+          variant="ghost" 
+          size="sm" 
+          onClick={onCancel}
+          className="text-muted-foreground hover:text-foreground"
+        >
+          ✕
+        </Button>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -114,11 +122,9 @@ export const TileForm = ({ tile, onSubmit, onCancel, loading }: TileFormProps) =
             <Button type="submit" disabled={loading}>
               💾 {loading ? 'Bezig...' : 'Bewaar'}
             </Button>
-            {tile && (
-              <Button type="button" variant="outline" onClick={onCancel}>
-                Annuleren
-              </Button>
-            )}
+            <Button type="button" variant="outline" onClick={onCancel}>
+              Annuleren
+            </Button>
           </div>
         </form>
       </CardContent>
