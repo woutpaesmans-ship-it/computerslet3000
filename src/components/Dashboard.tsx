@@ -251,6 +251,18 @@ export default function Dashboard() {
               ➕ Nieuwe tegel toevoegen
             </button>
           )}
+          
+          {(showForm || editingTile) && (
+            <TileForm
+              tile={editingTile}
+              onSubmit={handleSubmit}
+              onCancel={() => {
+                setEditingTile(null);
+                setShowForm(false);
+              }}
+              loading={createTileMutation.isPending || updateTileMutation.isPending}
+            />
+          )}
         </div>
 
         {tiles.length > 0 && (
@@ -274,17 +286,6 @@ export default function Dashboard() {
           </DndContext>
         )}
 
-        {(showForm || editingTile) && (
-          <TileForm
-            tile={editingTile}
-            onSubmit={handleSubmit}
-            onCancel={() => {
-              setEditingTile(null);
-              setShowForm(false);
-            }}
-            loading={createTileMutation.isPending || updateTileMutation.isPending}
-          />
-        )}
       </div>
     </div>
   );
