@@ -76,8 +76,8 @@ const Donation = () => {
             Steun Computerslet 3000
           </h1>
           <p className="text-muted-foreground">
-            Vind je Computerslet 3000 handig of leuk? Overweeg dan een vrijwillige gift om de ontwikkeling te ondersteunen! 
-            Elke bijdrage helpt ons om het programma te blijven verbeteren.
+            Maakt de computerslet 3000 jou ook zo gelukkig? Overweeg dan om je Computerpimp een fooi te geven. 
+            Zo kan deze ervoor zorgen dat je Computerslet 3000 haar werk zal blijven doen.
           </p>
         </div>
 
