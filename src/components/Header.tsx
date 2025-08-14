@@ -2,7 +2,8 @@ import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
-import { LogOut, Upload, Download } from 'lucide-react';
+import { LogOut, Upload, Download, Heart } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { Tile } from '@/types/tile';
 
 interface HeaderProps {
@@ -13,6 +14,7 @@ interface HeaderProps {
 export const Header = ({ tiles, onImport }: HeaderProps) => {
   const { user } = useAuth();
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     const { error } = await supabase.auth.signOut();
@@ -95,6 +97,16 @@ export const Header = ({ tiles, onImport }: HeaderProps) => {
         </div>
         
         <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => navigate('/donatie')}
+            className="flex items-center gap-2"
+          >
+            <Heart className="h-4 w-4 text-red-500" />
+            <span className="hidden sm:inline">Steun ons</span>
+          </Button>
+          
           <Button
             variant="outline"
             size="sm"
