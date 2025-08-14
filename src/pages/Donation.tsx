@@ -70,20 +70,18 @@ const Donation = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-secondary/20 p-4">
-      <div className="container mx-auto max-w-2xl">
-        {/* Back button */}
-        <div className="mb-6">
-          <Button
-            variant="ghost"
-            onClick={() => navigate('/')}
-            className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Terug naar dashboard
-          </Button>
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-background to-secondary/20 p-4 relative">
+      {/* Back button */}
+      <Button
+        variant="outline"
+        size="icon"
+        onClick={() => navigate('/')}
+        className="absolute top-4 left-4 rounded-full h-12 w-12 border-2 shadow-lg hover:scale-105 transition-transform"
+      >
+        <ArrowLeft className="h-5 w-5" />
+      </Button>
 
+      <div className="container mx-auto max-w-2xl">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold mb-4 flex items-center justify-center gap-2">
             <Heart className="text-red-500" />
