@@ -76,8 +76,8 @@ const Donation = () => {
             Steun Computerslet 3000
           </h1>
           <p className="text-muted-foreground">
-            Maakt de computerslet 3000 jou ook zo gelukkig? Overweeg dan om je Computerpimp een fooi te geven. 
-            Zo kan deze ervoor zorgen dat je Computerslet 3000 haar werk zal blijven doen.
+            Maakt de Computerslet 3000 jou ook zo gelukkig? Overweeg dan om je Computerpimp een fooi te geven. 
+            Zo kan hij ervoor zorgen dat je Computerslet 3000 haar werk zal blijven doen.
           </p>
         </div>
 
