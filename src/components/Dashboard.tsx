@@ -3,6 +3,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { Tile } from '@/types/tile';
 import { TileCard } from './TileCard';
 import { TileForm } from './TileForm';
@@ -26,6 +27,7 @@ import {
 export default function Dashboard() {
   const { user } = useAuth();
   const { toast } = useToast();
+  const { t } = useLanguage();
   const queryClient = useQueryClient();
   const [editingTile, setEditingTile] = useState<Tile | null>(null);
   const [showForm, setShowForm] = useState(false);
@@ -81,8 +83,8 @@ export default function Dashboard() {
       queryClient.invalidateQueries({ queryKey: ['tiles', user?.id] });
       setShowForm(false);
       toast({
-        title: "Tegel toegevoegd",
-        description: "Je nieuwe tegel is succesvol aangemaakt.",
+        title: t('tile.created'),
+        description: t('tile.created'),
       });
     },
     onError: (error) => {
@@ -227,7 +229,7 @@ export default function Dashboard() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-muted-foreground">Laden...</p>
+          <p className="text-muted-foreground">{t('dashboard.loading')}</p>
         </div>
       </div>
     );
@@ -248,7 +250,7 @@ export default function Dashboard() {
               onClick={() => setShowForm(true)}
               className="inline-flex items-center px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
             >
-              ➕ Nieuwe tegel toevoegen
+              ➕ {t('dashboard.addTile')}
             </button>
           )}
           

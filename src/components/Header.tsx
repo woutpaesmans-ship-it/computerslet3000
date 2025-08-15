@@ -2,9 +2,16 @@ import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
-import { LogOut, Upload, Download, Heart } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { LogOut, Upload, Download, Heart, Languages } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Tile } from '@/types/tile';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface HeaderProps {
   tiles: Tile[];
@@ -14,20 +21,21 @@ interface HeaderProps {
 export const Header = ({ tiles, onImport }: HeaderProps) => {
   const { user } = useAuth();
   const { toast } = useToast();
+  const { t, language, setLanguage } = useLanguage();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     const { error } = await supabase.auth.signOut();
     if (error) {
       toast({
-        title: "Fout bij uitloggen",
+        title: t('logout.error'),
         description: error.message,
         variant: "destructive",
       });
     } else {
       toast({
-        title: "Tot ziens!",
-        description: "Je bent succesvol uitgelogd.",
+        title: t('logout.success'),
+        description: t('logout.successDesc'),
       });
     }
   };
@@ -50,8 +58,8 @@ export const Header = ({ tiles, onImport }: HeaderProps) => {
     URL.revokeObjectURL(url);
 
     toast({
-      title: "📤 Export voltooid",
-      description: "Je tegels zijn geëxporteerd naar een JSON-bestand.",
+      title: t('export.success'),
+      description: t('export.successDesc'),
     });
   };
 
@@ -66,16 +74,16 @@ export const Header = ({ tiles, onImport }: HeaderProps) => {
         if (Array.isArray(importedData)) {
           onImport(importedData);
           toast({
-            title: "📥 Import voltooid",
-            description: `${importedData.length} tegels geïmporteerd.`,
+            title: t('import.success'),
+            description: `${importedData.length} ${t('import.successDesc')}`,
           });
         } else {
           throw new Error("Ongeldig bestandsformaat");
         }
       } catch (err) {
         toast({
-          title: "Fout bij importeren",
-          description: "Het bestand kon niet worden gelezen. Controleer het formaat.",
+          title: t('import.error'),
+          description: t('import.errorDesc'),
           variant: "destructive",
         });
       }
@@ -90,7 +98,7 @@ export const Header = ({ tiles, onImport }: HeaderProps) => {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 items-center justify-between">
         <div>
-          <h1 className="text-xl font-bold text-primary">🤖 Computerslet 3000</h1>
+          <h1 className="text-xl font-bold text-primary">{t('header.title')}</h1>
           {user && (
             <p className="text-xs text-muted-foreground">{user.email}</p>
           )}
@@ -104,7 +112,7 @@ export const Header = ({ tiles, onImport }: HeaderProps) => {
             className="flex items-center gap-2"
           >
             <Heart className="h-4 w-4 text-red-500" />
-            <span className="hidden sm:inline">Steun ons</span>
+            <span className="hidden sm:inline">{t('header.support')}</span>
           </Button>
           
           <Button
@@ -114,7 +122,7 @@ export const Header = ({ tiles, onImport }: HeaderProps) => {
             className="hidden sm:flex items-center gap-2"
           >
             <Download className="h-4 w-4" />
-            Exporteer
+            {t('header.export')}
           </Button>
           
           <div className="hidden sm:block">
@@ -132,9 +140,42 @@ export const Header = ({ tiles, onImport }: HeaderProps) => {
               className="flex items-center gap-2"
             >
               <Upload className="h-4 w-4" />
-              Importeer
+              {t('header.import')}
             </Button>
           </div>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="outline"
+                size="sm"
+                className="flex items-center gap-2"
+              >
+                <Languages className="h-4 w-4" />
+                <span className="hidden sm:inline">{t('header.language')}</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={() => setLanguage('nl')}>
+                {t('language.nl')} {language === 'nl' && '✓'}
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setLanguage('en')}>
+                {t('language.en')} {language === 'en' && '✓'}
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setLanguage('fr')}>
+                {t('language.fr')} {language === 'fr' && '✓'}
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setLanguage('es')}>
+                {t('language.es')} {language === 'es' && '✓'}
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setLanguage('it')}>
+                {t('language.it')} {language === 'it' && '✓'}
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setLanguage('de')}>
+                {t('language.de')} {language === 'de' && '✓'}
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
 
           <Button
             variant="outline"
@@ -143,7 +184,7 @@ export const Header = ({ tiles, onImport }: HeaderProps) => {
             className="flex items-center gap-2"
           >
             <LogOut className="h-4 w-4" />
-            <span className="hidden sm:inline">Uitloggen</span>
+            <span className="hidden sm:inline">{t('header.logout')}</span>
           </Button>
         </div>
       </div>

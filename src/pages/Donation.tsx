@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Copy, Heart, CreditCard, Banknote, ArrowLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
 
@@ -13,6 +14,7 @@ const Donation = () => {
   const [customAmount, setCustomAmount] = useState<string>('');
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
+  const { t } = useLanguage();
   const navigate = useNavigate();
 
   const predefinedAmounts = [5, 10, 25, 50];
@@ -85,11 +87,10 @@ const Donation = () => {
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold mb-4 flex items-center justify-center gap-2">
             <Heart className="text-red-500" />
-            Steun Computerslet 3000
+            {t('donation.title')}
           </h1>
           <p className="text-muted-foreground">
-            Maakt de Computerslet 3000 jou ook zo gelukkig? Overweeg dan om je Computerpimp een fooi te geven. 
-            Zo kan hij ervoor zorgen dat je Computerslet 3000 haar werk zal blijven doen.
+            {t('donation.description')}
           </p>
         </div>
 
@@ -141,7 +142,7 @@ const Donation = () => {
             <CardContent className="space-y-4">
               {/* Predefined amounts */}
               <div>
-                <Label className="text-sm font-medium mb-3 block">Kies een bedrag:</Label>
+                <Label className="text-sm font-medium mb-3 block">{t('donation.amount')}:</Label>
                 <div className="grid grid-cols-2 gap-3">
                   {predefinedAmounts.map((amount) => (
                     <Button
@@ -162,7 +163,7 @@ const Donation = () => {
               {/* Custom amount */}
               <div className="space-y-3">
                 <Label htmlFor="custom-amount" className="text-sm font-medium">
-                  Of voer een eigen bedrag in:
+                  {t('donation.custom')}:
                 </Label>
                 <div className="flex gap-2">
                   <div className="relative flex-1">
@@ -185,7 +186,7 @@ const Donation = () => {
                     disabled={loading || !customAmount}
                     className="px-6"
                   >
-                    {loading ? 'Bezig...' : 'Doneer'}
+                    {loading ? t('donation.processing') : t('donation.donate')}
                   </Button>
                 </div>
               </div>

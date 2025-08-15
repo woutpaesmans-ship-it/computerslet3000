@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/useAuth';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { useEffect } from 'react';
 
 export default function Auth() {
@@ -15,6 +16,7 @@ export default function Auth() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const { user } = useAuth();
 
@@ -37,21 +39,21 @@ export default function Auth() {
 
       if (error) {
         toast({
-          title: "Fout bij inloggen",
+          title: t('auth.loginError'),
           description: error.message,
           variant: "destructive",
         });
       } else {
         toast({
-          title: "Welkom terug!",
-          description: "Je bent succesvol ingelogd.",
+          title: t('auth.loginSuccess'),
+          description: t('auth.loginSuccessDesc'),
         });
         navigate('/');
       }
     } catch (error) {
       toast({
-        title: "Onverwachte fout",
-        description: "Er is iets misgegaan. Probeer het opnieuw.",
+        title: t('common.error'),
+        description: t('common.error'),
         variant: "destructive",
       });
     } finally {
@@ -76,20 +78,20 @@ export default function Auth() {
 
       if (error) {
         toast({
-          title: "Fout bij registreren",
+          title: t('auth.signupError'),
           description: error.message,
           variant: "destructive",
         });
       } else {
         toast({
-          title: "Account aangemaakt!",
-          description: "Controleer je e-mail voor bevestiging.",
+          title: t('auth.signupSuccess'),
+          description: t('auth.signupSuccessDesc'),
         });
       }
     } catch (error) {
       toast({
-        title: "Onverwachte fout",
-        description: "Er is iets misgegaan. Probeer het opnieuw.",
+        title: t('common.error'),
+        description: t('common.error'),
         variant: "destructive",
       });
     } finally {
@@ -101,22 +103,22 @@ export default function Auth() {
     <div className="min-h-screen flex items-center justify-center p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold">🤖 Computerslet 3000</CardTitle>
+          <CardTitle className="text-2xl font-bold">{t('header.title')}</CardTitle>
           <CardDescription>
-            Beheer je teksttegels met je eigen account
+            {t('auth.subtitle')}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="login" className="w-full">
             <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="login">Inloggen</TabsTrigger>
-              <TabsTrigger value="signup">Registreren</TabsTrigger>
+              <TabsTrigger value="login">{t('auth.login')}</TabsTrigger>
+              <TabsTrigger value="signup">{t('auth.signup')}</TabsTrigger>
             </TabsList>
             
             <TabsContent value="login">
               <form onSubmit={handleLogin} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="email">E-mailadres</Label>
+                  <Label htmlFor="email">{t('auth.email')}</Label>
                   <Input
                     id="email"
                     type="email"
@@ -126,7 +128,7 @@ export default function Auth() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="password">Wachtwoord</Label>
+                  <Label htmlFor="password">{t('auth.password')}</Label>
                   <Input
                     id="password"
                     type="password"
@@ -136,7 +138,7 @@ export default function Auth() {
                   />
                 </div>
                 <Button type="submit" className="w-full" disabled={loading}>
-                  {loading ? 'Bezig...' : 'Inloggen'}
+                  {loading ? t('donation.processing') : t('auth.loginButton')}
                 </Button>
               </form>
             </TabsContent>
@@ -144,7 +146,7 @@ export default function Auth() {
             <TabsContent value="signup">
               <form onSubmit={handleSignUp} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="signup-email">E-mailadres</Label>
+                  <Label htmlFor="signup-email">{t('auth.email')}</Label>
                   <Input
                     id="signup-email"
                     type="email"
@@ -154,7 +156,7 @@ export default function Auth() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="signup-password">Wachtwoord</Label>
+                  <Label htmlFor="signup-password">{t('auth.password')}</Label>
                   <Input
                     id="signup-password"
                     type="password"
@@ -165,7 +167,7 @@ export default function Auth() {
                   />
                 </div>
                 <Button type="submit" className="w-full" disabled={loading}>
-                  {loading ? 'Bezig...' : 'Account aanmaken'}
+                  {loading ? t('donation.processing') : t('auth.signupButton')}
                 </Button>
               </form>
             </TabsContent>
