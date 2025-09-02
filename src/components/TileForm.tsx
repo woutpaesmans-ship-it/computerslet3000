@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface TileFormProps {
   tile?: Tile | null;
@@ -18,6 +19,7 @@ export const TileForm = ({ tile, onSubmit, onCancel, loading }: TileFormProps) =
   const [content, setContent] = useState('');
   const [color, setColor] = useState<string>('blue');
   const contentRef = useRef<HTMLDivElement>(null);
+  const { t } = useLanguage();
 
   useEffect(() => {
     if (tile) {
@@ -62,7 +64,7 @@ export const TileForm = ({ tile, onSubmit, onCancel, loading }: TileFormProps) =
     <Card className="mt-8">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-lg">
-          {tile ? '✏️ Tegel bewerken' : '➕ Nieuwe tegel toevoegen'}
+          {tile ? t('tile.editTitle') : t('tile.addTitle')}
         </CardTitle>
         <Button 
           variant="ghost" 
@@ -76,7 +78,7 @@ export const TileForm = ({ tile, onSubmit, onCancel, loading }: TileFormProps) =
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="title">Onderwerp:</Label>
+            <Label htmlFor="title">{t('tile.subject')}</Label>
             <Input
               id="title"
               value={title}
@@ -86,7 +88,7 @@ export const TileForm = ({ tile, onSubmit, onCancel, loading }: TileFormProps) =
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="color">Kleur:</Label>
+            <Label htmlFor="color">{t('tile.color')}</Label>
             <Select value={color} onValueChange={setColor}>
               <SelectTrigger>
                 <SelectValue />
@@ -108,7 +110,7 @@ export const TileForm = ({ tile, onSubmit, onCancel, loading }: TileFormProps) =
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="content">Tekst:</Label>
+            <Label htmlFor="content">{t('tile.text')}</Label>
             <div
               ref={contentRef}
               contentEditable
@@ -120,10 +122,10 @@ export const TileForm = ({ tile, onSubmit, onCancel, loading }: TileFormProps) =
 
           <div className="flex gap-2">
             <Button type="submit" disabled={loading}>
-              💾 {loading ? 'Bezig...' : 'Bewaar'}
+              {loading ? t('tile.saving') : t('tile.saveButton')}
             </Button>
             <Button type="button" variant="outline" onClick={onCancel}>
-              Annuleren
+              {t('tile.cancel')}
             </Button>
           </div>
         </form>

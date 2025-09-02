@@ -78,7 +78,7 @@ export const Header = ({ tiles, onImport }: HeaderProps) => {
             description: `${importedData.length} ${t('import.successDesc')}`,
           });
         } else {
-          throw new Error("Ongeldig bestandsformaat");
+          throw new Error(t('import.error'));
         }
       } catch (err) {
         toast({
@@ -157,22 +157,22 @@ export const Header = ({ tiles, onImport }: HeaderProps) => {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem onClick={() => setLanguage('nl')}>
-                {t('language.nl')} {language === 'nl' && '✓'}
+                Nederlands {language === 'nl' && '✓'}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => setLanguage('en')}>
-                {t('language.en')} {language === 'en' && '✓'}
+                English {language === 'en' && '✓'}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => setLanguage('fr')}>
-                {t('language.fr')} {language === 'fr' && '✓'}
+                Français {language === 'fr' && '✓'}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => setLanguage('es')}>
-                {t('language.es')} {language === 'es' && '✓'}
+                Español {language === 'es' && '✓'}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => setLanguage('it')}>
-                {t('language.it')} {language === 'it' && '✓'}
+                Italiano {language === 'it' && '✓'}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => setLanguage('de')}>
-                {t('language.de')} {language === 'de' && '✓'}
+                Deutsch {language === 'de' && '✓'}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

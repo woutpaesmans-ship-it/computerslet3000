@@ -61,6 +61,12 @@ const translations = {
     'tile.created': 'Tegel aangemaakt',
     'tile.updated': 'Tegel bijgewerkt',
     'tile.deleted': 'Tegel verwijderd',
+    'tile.subject': 'Onderwerp:',
+    'tile.text': 'Tekst:',
+    'tile.editTitle': '✏️ Tegel bewerken',
+    'tile.addTitle': '➕ Nieuwe tegel toevoegen',
+    'tile.saveButton': '💾 Bewaar',
+    'tile.saving': 'Bezig...',
     
     // Donation
     'donation.title': 'Steun Computerslet 3000',
@@ -150,6 +156,12 @@ const translations = {
     'tile.created': 'Tile created',
     'tile.updated': 'Tile updated',
     'tile.deleted': 'Tile deleted',
+    'tile.subject': 'Subject:',
+    'tile.text': 'Text:',
+    'tile.editTitle': '✏️ Edit tile',
+    'tile.addTitle': '➕ Add new tile',
+    'tile.saveButton': '💾 Save',
+    'tile.saving': 'Saving...',
     
     // Donation
     'donation.title': 'Support Computerslet 3000',
@@ -239,6 +251,12 @@ const translations = {
     'tile.created': 'Tuile créée',
     'tile.updated': 'Tuile mise à jour',
     'tile.deleted': 'Tuile supprimée',
+    'tile.subject': 'Sujet:',
+    'tile.text': 'Texte:',
+    'tile.editTitle': '✏️ Modifier la tuile',
+    'tile.addTitle': '➕ Ajouter une nouvelle tuile',
+    'tile.saveButton': '💾 Enregistrer',
+    'tile.saving': 'Enregistrement...',
     
     // Donation
     'donation.title': 'Soutenez Computerslet 3000',
@@ -328,6 +346,12 @@ const translations = {
     'tile.created': 'Ficha creada',
     'tile.updated': 'Ficha actualizada',
     'tile.deleted': 'Ficha eliminada',
+    'tile.subject': 'Asunto:',
+    'tile.text': 'Texto:',
+    'tile.editTitle': '✏️ Editar ficha',
+    'tile.addTitle': '➕ Agregar nueva ficha',
+    'tile.saveButton': '💾 Guardar',
+    'tile.saving': 'Guardando...',
     
     // Donation
     'donation.title': 'Apoya Computerslet 3000',
@@ -417,6 +441,12 @@ const translations = {
     'tile.created': 'Tessera creata',
     'tile.updated': 'Tessera aggiornata',
     'tile.deleted': 'Tessera eliminata',
+    'tile.subject': 'Argomento:',
+    'tile.text': 'Testo:',
+    'tile.editTitle': '✏️ Modifica tessera',
+    'tile.addTitle': '➕ Aggiungi nuova tessera',
+    'tile.saveButton': '💾 Salva',
+    'tile.saving': 'Salvataggio...',
     
     // Donation
     'donation.title': 'Sostieni Computerslet 3000',
@@ -506,6 +536,12 @@ const translations = {
     'tile.created': 'Kachel erstellt',
     'tile.updated': 'Kachel aktualisiert',
     'tile.deleted': 'Kachel gelöscht',
+    'tile.subject': 'Betreff:',
+    'tile.text': 'Text:',
+    'tile.editTitle': '✏️ Kachel bearbeiten',
+    'tile.addTitle': '➕ Neue Kachel hinzufügen',
+    'tile.saveButton': '💾 Speichern',
+    'tile.saving': 'Speichern...',
     
     // Donation
     'donation.title': 'Unterstütze Computerslet 3000',

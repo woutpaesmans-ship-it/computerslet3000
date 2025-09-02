@@ -10,13 +10,20 @@ import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/useAuth';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useEffect } from 'react';
+import { Languages } from 'lucide-react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export default function Auth() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
-  const { t } = useLanguage();
+  const { t, language, setLanguage } = useLanguage();
   const navigate = useNavigate();
   const { user } = useAuth();
 
@@ -100,7 +107,43 @@ export default function Auth() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
+    <div className="min-h-screen flex flex-col items-center justify-center p-4">
+      {/* Language Switcher */}
+      <div className="fixed top-4 right-4">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="outline"
+              size="sm"
+              className="flex items-center gap-2"
+            >
+              <Languages className="h-4 w-4" />
+              <span className="hidden sm:inline">{t('header.language')}</span>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem onClick={() => setLanguage('nl')}>
+              Nederlands {language === 'nl' && '✓'}
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setLanguage('en')}>
+              English {language === 'en' && '✓'}
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setLanguage('fr')}>
+              Français {language === 'fr' && '✓'}
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setLanguage('es')}>
+              Español {language === 'es' && '✓'}
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setLanguage('it')}>
+              Italiano {language === 'it' && '✓'}
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setLanguage('de')}>
+              Deutsch {language === 'de' && '✓'}
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl font-bold">{t('header.title')}</CardTitle>
