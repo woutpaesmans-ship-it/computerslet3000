@@ -242,7 +242,7 @@ export default function Dashboard() {
       <div className="container mx-auto p-4">
         <div className="mb-6">
           <p className="text-muted-foreground mb-4">
-            Klik op een tegel om de tekst te kopiëren. Gebruik ✏️ om te bewerken of 🗑️ om te verwijderen.
+            {t('dashboard.instruction')}
           </p>
           
           {!showForm && !editingTile && (

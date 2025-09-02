@@ -24,13 +24,13 @@ const Donation = () => {
     try {
       await navigator.clipboard.writeText(text);
       toast({
-        title: "Gekopieerd!",
-        description: "Rekeningnummer is gekopieerd naar klembord",
+        title: t('donation.copied'),
+        description: t('donation.copySuccess'),
       });
     } catch (err) {
       toast({
-        title: "Fout",
-        description: "Kon rekeningnummer niet kopiëren",
+        title: t('common.error'),
+        description: t('donation.copyError'),
         variant: "destructive",
       });
     }
@@ -49,8 +49,8 @@ const Donation = () => {
       window.open(data.url, '_blank');
     } catch (error) {
       toast({
-        title: "Fout",
-        description: "Er is een fout opgetreden bij het verwerken van de donatie",
+        title: t('common.error'),
+        description: t('donation.processError'),
         variant: "destructive",
       });
     } finally {
@@ -64,8 +64,8 @@ const Donation = () => {
       handleStripeDonation(amount);
     } else {
       toast({
-        title: "Ongeldig bedrag",
-        description: "Voer een geldig bedrag in (minimaal €1)",
+        title: t('donation.invalidAmount'),
+        description: t('donation.minAmount'),
         variant: "destructive",
       });
     }
@@ -100,16 +100,16 @@ const Donation = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Banknote className="h-5 w-5" />
-                Bankovermaking (gratis)
+                {t('donation.bankTransfer')}
               </CardTitle>
               <CardDescription>
-                Maak een overmaking naar onze Belgische KBC-rekening
+                {t('donation.bankDesc')}
               </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="flex items-center justify-between p-4 bg-secondary/50 rounded-lg">
                 <div>
-                  <Label className="text-sm text-muted-foreground">Rekeningnummer:</Label>
+                  <Label className="text-sm text-muted-foreground">{t('donation.accountNumber')}</Label>
                   <p className="font-mono text-lg font-semibold">{kbcAccount}</p>
                 </div>
                 <Button
@@ -121,7 +121,7 @@ const Donation = () => {
                 </Button>
               </div>
               <p className="text-sm text-muted-foreground mt-2">
-                Vermeld bij de mededeling: "Donatie Computerslet 3000"
+                {t('donation.reference')}
               </p>
             </CardContent>
           </Card>
@@ -133,10 +133,10 @@ const Donation = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <CreditCard className="h-5 w-5" />
-                Online betaling (Stripe)
+                {t('donation.onlinePayment')}
               </CardTitle>
               <CardDescription>
-                Betaal veilig met creditcard, bancontact of andere betaalmethoden
+                {t('donation.onlineDesc')}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -192,17 +192,17 @@ const Donation = () => {
               </div>
 
               <p className="text-xs text-muted-foreground">
-                * Online betalingen worden verwerkt door Stripe. Er kunnen transactiekosten van toepassing zijn.
+                {t('donation.stripeNotice')}
               </p>
             </CardContent>
           </Card>
 
           <div className="text-center">
             <p className="text-lg font-semibold text-primary mb-2">
-              Dank je wel voor je steun! ❤️
+              {t('donation.thankYou')}
             </p>
             <p className="text-sm text-muted-foreground">
-              Jouw bijdrage helpt ons om Computerslet 3000 nog beter te maken.
+              {t('donation.helpText')}
             </p>
           </div>
         </div>

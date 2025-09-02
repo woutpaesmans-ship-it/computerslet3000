@@ -50,6 +50,7 @@ const translations = {
     'dashboard.editTile': 'Tegel bewerken',
     'dashboard.exampleTitle': 'Voorbeeld Tegel',
     'dashboard.exampleContent': 'Dit is een voorbeeldtegel. Klik om te bewerken!',
+    'dashboard.instruction': 'Klik op een tegel om de tekst te kopiëren. Gebruik ✏️ om te bewerken of 🗑️ om te verwijderen.',
     
     // Tile form
     'tile.title': 'Titel',
@@ -68,13 +69,28 @@ const translations = {
     'tile.saveButton': '💾 Bewaar',
     'tile.saving': 'Bezig...',
     
-    // Donation
+    // Donation page
     'donation.title': 'Steun Computerslet 3000',
     'donation.description': 'Maakt de Computerslet 3000 jou ook zo gelukkig? Overweeg dan om je Computerpimp een fooi te geven. Zo kan hij ervoor zorgen dat je Computerslet 3000 haar werk zal blijven doen.',
     'donation.amount': 'Donatiebedrag',
     'donation.custom': 'Aangepast bedrag',
     'donation.donate': 'Doneren',
     'donation.processing': 'Bezig met verwerken...',
+    'donation.copied': 'Gekopieerd!',
+    'donation.copySuccess': 'Rekeningnummer is gekopieerd naar klembord',
+    'donation.copyError': 'Kon rekeningnummer niet kopiëren',
+    'donation.bankTransfer': 'Bankovermaking (gratis)',
+    'donation.bankDesc': 'Maak een overmaking naar onze Belgische KBC-rekening',
+    'donation.accountNumber': 'Rekeningnummer:',
+    'donation.reference': 'Vermeld bij de mededeling: "Donatie Computerslet 3000"',
+    'donation.onlinePayment': 'Online betaling (Stripe)',
+    'donation.onlineDesc': 'Betaal veilig met creditcard, bancontact of andere betaalmethoden',
+    'donation.invalidAmount': 'Ongeldig bedrag',
+    'donation.minAmount': 'Voer een geldig bedrag in (minimaal €1)',
+    'donation.stripeNotice': '* Online betalingen worden verwerkt door Stripe. Er kunnen transactiekosten van toepassing zijn.',
+    'donation.thankYou': 'Dank je wel voor je steun! ❤️',
+    'donation.helpText': 'Jouw bijdrage helpt ons om Computerslet 3000 nog beter te maken.',
+    'donation.processError': 'Er is een fout opgetreden bij het verwerken van de donatie',
     
     // Donation success
     'donationSuccess.title': 'Bedankt voor je donatie!',
@@ -145,6 +161,7 @@ const translations = {
     'dashboard.editTile': 'Edit tile',
     'dashboard.exampleTitle': 'Example Tile',
     'dashboard.exampleContent': 'This is an example tile. Click to edit!',
+    'dashboard.instruction': 'Click on a tile to copy the text. Use ✏️ to edit or 🗑️ to delete.',
     
     // Tile form
     'tile.title': 'Title',
@@ -163,13 +180,28 @@ const translations = {
     'tile.saveButton': '💾 Save',
     'tile.saving': 'Saving...',
     
-    // Donation
+    // Donation page
     'donation.title': 'Support Computerslet 3000',
     'donation.description': 'Does Computerslet 3000 make you happy too? Consider giving your Computer pimp a tip. This way he can ensure that your Computerslet 3000 will continue to do her work.',
     'donation.amount': 'Donation amount',
     'donation.custom': 'Custom amount',
     'donation.donate': 'Donate',
     'donation.processing': 'Processing...',
+    'donation.copied': 'Copied!',
+    'donation.copySuccess': 'Account number copied to clipboard',
+    'donation.copyError': 'Could not copy account number',
+    'donation.bankTransfer': 'Bank transfer (free)',
+    'donation.bankDesc': 'Transfer to our Belgian KBC account',
+    'donation.accountNumber': 'Account number:',
+    'donation.reference': 'Mention in communication: "Donation Computerslet 3000"',
+    'donation.onlinePayment': 'Online payment (Stripe)',
+    'donation.onlineDesc': 'Pay safely with credit card, bancontact or other payment methods',
+    'donation.invalidAmount': 'Invalid amount',
+    'donation.minAmount': 'Enter a valid amount (minimum €1)',
+    'donation.stripeNotice': '* Online payments are processed by Stripe. Transaction fees may apply.',
+    'donation.thankYou': 'Thank you for your support! ❤️',
+    'donation.helpText': 'Your contribution helps us make Computerslet 3000 even better.',
+    'donation.processError': 'An error occurred while processing the donation',
     
     // Donation success
     'donationSuccess.title': 'Thank you for your donation!',
@@ -240,6 +272,7 @@ const translations = {
     'dashboard.editTile': 'Modifier la tuile',
     'dashboard.exampleTitle': 'Tuile d\'exemple',
     'dashboard.exampleContent': 'Ceci est une tuile d\'exemple. Cliquez pour modifier !',
+    'dashboard.instruction': 'Cliquez sur une tuile pour copier le texte. Utilisez ✏️ pour modifier ou 🗑️ pour supprimer.',
     
     // Tile form
     'tile.title': 'Titre',
@@ -258,13 +291,28 @@ const translations = {
     'tile.saveButton': '💾 Enregistrer',
     'tile.saving': 'Enregistrement...',
     
-    // Donation
+    // Donation page
     'donation.title': 'Soutenez Computerslet 3000',
     'donation.description': 'Computerslet 3000 vous rend-il heureux aussi ? Pensez à donner un pourboire à votre Pimp informatique. Ainsi, il peut s\'assurer que votre Computerslet 3000 continuera à faire son travail.',
     'donation.amount': 'Montant du don',
     'donation.custom': 'Montant personnalisé',
     'donation.donate': 'Faire un don',
     'donation.processing': 'Traitement en cours...',
+    'donation.copied': 'Copié !',
+    'donation.copySuccess': 'Numéro de compte copié dans le presse-papiers',
+    'donation.copyError': 'Impossible de copier le numéro de compte',
+    'donation.bankTransfer': 'Virement bancaire (gratuit)',
+    'donation.bankDesc': 'Effectuer un virement vers notre compte KBC belge',
+    'donation.accountNumber': 'Numéro de compte :',
+    'donation.reference': 'Mentionner dans la communication : "Don Computerslet 3000"',
+    'donation.onlinePayment': 'Paiement en ligne (Stripe)',
+    'donation.onlineDesc': 'Payez en toute sécurité avec une carte de crédit, bancontact ou d\'autres méthodes de paiement',
+    'donation.invalidAmount': 'Montant invalide',
+    'donation.minAmount': 'Entrez un montant valide (minimum 1€)',
+    'donation.stripeNotice': '* Les paiements en ligne sont traités par Stripe. Des frais de transaction peuvent s\'appliquer.',
+    'donation.thankYou': 'Merci pour votre soutien ! ❤️',
+    'donation.helpText': 'Votre contribution nous aide à améliorer Computerslet 3000.',
+    'donation.processError': 'Une erreur s\'est produite lors du traitement du don',
     
     // Donation success
     'donationSuccess.title': 'Merci pour votre don !',
@@ -335,6 +383,7 @@ const translations = {
     'dashboard.editTile': 'Editar ficha',
     'dashboard.exampleTitle': 'Ficha de ejemplo',
     'dashboard.exampleContent': 'Esta es una ficha de ejemplo. ¡Haz clic para editar!',
+    'dashboard.instruction': 'Haz clic en una ficha para copiar el texto. Usa ✏️ para editar o 🗑️ para eliminar.',
     
     // Tile form
     'tile.title': 'Título',
@@ -353,13 +402,28 @@ const translations = {
     'tile.saveButton': '💾 Guardar',
     'tile.saving': 'Guardando...',
     
-    // Donation
+    // Donation page
     'donation.title': 'Apoya Computerslet 3000',
     'donation.description': '¿Computerslet 3000 también te hace feliz? Considera darle una propina a tu Proxeneta informático. Así puede asegurar que tu Computerslet 3000 siga haciendo su trabajo.',
     'donation.amount': 'Cantidad de donación',
     'donation.custom': 'Cantidad personalizada',
     'donation.donate': 'Donar',
     'donation.processing': 'Procesando...',
+    'donation.copied': '¡Copiado!',
+    'donation.copySuccess': 'Número de cuenta copiado al portapapeles',
+    'donation.copyError': 'No se pudo copiar el número de cuenta',
+    'donation.bankTransfer': 'Transferencia bancaria (gratis)',
+    'donation.bankDesc': 'Transferir a nuestra cuenta KBC belga',
+    'donation.accountNumber': 'Número de cuenta:',
+    'donation.reference': 'Mencionar en comunicación: "Donación Computerslet 3000"',
+    'donation.onlinePayment': 'Pago en línea (Stripe)',
+    'donation.onlineDesc': 'Paga de forma segura con tarjeta de crédito, bancontact u otros métodos de pago',
+    'donation.invalidAmount': 'Cantidad inválida',
+    'donation.minAmount': 'Ingresa una cantidad válida (mínimo €1)',
+    'donation.stripeNotice': '* Los pagos en línea son procesados por Stripe. Pueden aplicarse tarifas de transacción.',
+    'donation.thankYou': '¡Gracias por tu apoyo! ❤️',
+    'donation.helpText': 'Tu contribución nos ayuda a mejorar Computerslet 3000.',
+    'donation.processError': 'Ocurrió un error al procesar la donación',
     
     // Donation success
     'donationSuccess.title': '¡Gracias por tu donación!',
@@ -430,6 +494,7 @@ const translations = {
     'dashboard.editTile': 'Modifica tessera',
     'dashboard.exampleTitle': 'Tessera di esempio',
     'dashboard.exampleContent': 'Questa è una tessera di esempio. Clicca per modificare!',
+    'dashboard.instruction': 'Clicca su una tessera per copiare il testo. Usa ✏️ per modificare o 🗑️ per eliminare.',
     
     // Tile form
     'tile.title': 'Titolo',
@@ -448,13 +513,28 @@ const translations = {
     'tile.saveButton': '💾 Salva',
     'tile.saving': 'Salvataggio...',
     
-    // Donation
+    // Donation page
     'donation.title': 'Sostieni Computerslet 3000',
     'donation.description': 'Computerslet 3000 ti rende felice anche tu? Considera di dare una mancia al tuo Magnaccia informatico. Così può assicurarsi che il tuo Computerslet 3000 continui a fare il suo lavoro.',
     'donation.amount': 'Importo donazione',
     'donation.custom': 'Importo personalizzato',
     'donation.donate': 'Dona',
     'donation.processing': 'Elaborazione...',
+    'donation.copied': 'Copiato!',
+    'donation.copySuccess': 'Numero di conto copiato negli appunti',
+    'donation.copyError': 'Impossibile copiare il numero di conto',
+    'donation.bankTransfer': 'Bonifico bancario (gratuito)',
+    'donation.bankDesc': 'Trasferisci al nostro conto KBC belga',
+    'donation.accountNumber': 'Numero di conto:',
+    'donation.reference': 'Menzionare nella comunicazione: "Donazione Computerslet 3000"',
+    'donation.onlinePayment': 'Pagamento online (Stripe)',
+    'donation.onlineDesc': 'Paga in sicurezza con carta di credito, bancontact o altri metodi di pagamento',
+    'donation.invalidAmount': 'Importo non valido',
+    'donation.minAmount': 'Inserisci un importo valido (minimo €1)',
+    'donation.stripeNotice': '* I pagamenti online sono elaborati da Stripe. Potrebbero applicarsi commissioni di transazione.',
+    'donation.thankYou': 'Grazie per il tuo supporto! ❤️',
+    'donation.helpText': 'Il tuo contributo ci aiuta a migliorare Computerslet 3000.',
+    'donation.processError': 'Si è verificato un errore durante l\'elaborazione della donazione',
     
     // Donation success
     'donationSuccess.title': 'Grazie per la tua donazione!',
@@ -525,6 +605,7 @@ const translations = {
     'dashboard.editTile': 'Kachel bearbeiten',
     'dashboard.exampleTitle': 'Beispielkachel',
     'dashboard.exampleContent': 'Dies ist eine Beispielkachel. Klicke zum Bearbeiten!',
+    'dashboard.instruction': 'Klicke auf eine Kachel, um den Text zu kopieren. Verwende ✏️ zum Bearbeiten oder 🗑️ zum Löschen.',
     
     // Tile form
     'tile.title': 'Titel',
@@ -543,13 +624,28 @@ const translations = {
     'tile.saveButton': '💾 Speichern',
     'tile.saving': 'Speichern...',
     
-    // Donation
+    // Donation page
     'donation.title': 'Unterstütze Computerslet 3000',
     'donation.description': 'Macht dich Computerslet 3000 auch so glücklich? Erwäge, deinem Computer-Zuhälter ein Trinkgeld zu geben. So kann er dafür sorgen, dass dein Computerslet 3000 weiterhin ihre Arbeit macht.',
     'donation.amount': 'Spendenbetrag',
     'donation.custom': 'Benutzerdefinierter Betrag',
     'donation.donate': 'Spenden',
     'donation.processing': 'Verarbeitung...',
+    'donation.copied': 'Kopiert!',
+    'donation.copySuccess': 'Kontonummer in die Zwischenablage kopiert',
+    'donation.copyError': 'Kontonummer konnte nicht kopiert werden',
+    'donation.bankTransfer': 'Banküberweisung (kostenlos)',
+    'donation.bankDesc': 'Überweisung auf unser belgisches KBC-Konto',
+    'donation.accountNumber': 'Kontonummer:',
+    'donation.reference': 'Im Verwendungszweck erwähnen: "Spende Computerslet 3000"',
+    'donation.onlinePayment': 'Online-Zahlung (Stripe)',
+    'donation.onlineDesc': 'Sicher zahlen mit Kreditkarte, Bancontact oder anderen Zahlungsmethoden',
+    'donation.invalidAmount': 'Ungültiger Betrag',
+    'donation.minAmount': 'Geben Sie einen gültigen Betrag ein (mindestens €1)',
+    'donation.stripeNotice': '* Online-Zahlungen werden von Stripe verarbeitet. Es können Transaktionsgebühren anfallen.',
+    'donation.thankYou': 'Danke für deine Unterstützung! ❤️',
+    'donation.helpText': 'Dein Beitrag hilft uns, Computerslet 3000 zu verbessern.',
+    'donation.processError': 'Ein Fehler ist bei der Verarbeitung der Spende aufgetreten',
     
     // Donation success
     'donationSuccess.title': 'Danke für deine Spende!',
