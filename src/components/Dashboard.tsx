@@ -5,9 +5,11 @@ import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Tile } from '@/types/tile';
+import { Dashboard } from '@/types/dashboard';
 import { TileCard } from './TileCard';
 import { TileForm } from './TileForm';
 import { Header } from './Header';
+import { DashboardSelector } from './DashboardSelector';
 import {
   DndContext,
   closestCenter,
@@ -31,6 +33,7 @@ export default function Dashboard() {
   const queryClient = useQueryClient();
   const [editingTile, setEditingTile] = useState<Tile | null>(null);
   const [showForm, setShowForm] = useState(false);
+  const [currentDashboardId, setCurrentDashboardId] = useState<string>('');
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -39,28 +42,54 @@ export default function Dashboard() {
     })
   );
 
-  // Fetch tiles
-  const { data: tiles = [], isLoading } = useQuery({
-    queryKey: ['tiles', user?.id],
+  // Fetch dashboards
+  const { data: dashboards = [] } = useQuery({
+    queryKey: ['dashboards', user?.id],
     queryFn: async () => {
       if (!user) return [];
+      
+      const { data, error } = await supabase
+        .from('dashboards')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: true });
+
+      if (error) throw error;
+      return data as Dashboard[];
+    },
+    enabled: !!user,
+  });
+
+  // Set default dashboard when dashboards are loaded
+  useEffect(() => {
+    if (dashboards.length > 0 && !currentDashboardId) {
+      setCurrentDashboardId(dashboards[0].id);
+    }
+  }, [dashboards, currentDashboardId]);
+
+  // Fetch tiles for current dashboard
+  const { data: tiles = [], isLoading } = useQuery({
+    queryKey: ['tiles', user?.id, currentDashboardId],
+    queryFn: async () => {
+      if (!user || !currentDashboardId) return [];
       
       const { data, error } = await supabase
         .from('tiles')
         .select('*')
         .eq('user_id', user.id)
+        .eq('dashboard_id', currentDashboardId)
         .order('order_index', { ascending: true });
 
       if (error) throw error;
       return data as Tile[];
     },
-    enabled: !!user,
+    enabled: !!user && !!currentDashboardId,
   });
 
   // Create tile mutation
   const createTileMutation = useMutation({
     mutationFn: async (tileData: { title: string; content: string; color: string }) => {
-      if (!user) throw new Error('User not authenticated');
+      if (!user || !currentDashboardId) throw new Error('User not authenticated or no dashboard selected');
 
       const maxOrderIndex = tiles.length > 0 ? Math.max(...tiles.map(t => t.order_index)) : -1;
       
@@ -68,6 +97,7 @@ export default function Dashboard() {
         .from('tiles')
         .insert({
           user_id: user.id,
+          dashboard_id: currentDashboardId,
           title: tileData.title,
           content: tileData.content,
           color: tileData.color,
@@ -80,7 +110,7 @@ export default function Dashboard() {
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['tiles', user?.id] });
+      queryClient.invalidateQueries({ queryKey: ['tiles', user?.id, currentDashboardId] });
       setShowForm(false);
       toast({
         title: t('tile.created'),
@@ -110,7 +140,7 @@ export default function Dashboard() {
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['tiles', user?.id] });
+      queryClient.invalidateQueries({ queryKey: ['tiles', user?.id, currentDashboardId] });
       setEditingTile(null);
       toast({
         title: "Tegel bijgewerkt",
@@ -137,7 +167,7 @@ export default function Dashboard() {
       if (error) throw error;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['tiles', user?.id] });
+      queryClient.invalidateQueries({ queryKey: ['tiles', user?.id, currentDashboardId] });
       toast({
         title: "Tegel verwijderd",
         description: "De tegel is succesvol verwijderd.",
@@ -170,7 +200,7 @@ export default function Dashboard() {
       }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['tiles', user?.id] });
+      queryClient.invalidateQueries({ queryKey: ['tiles', user?.id, currentDashboardId] });
     },
   });
 
@@ -195,13 +225,14 @@ export default function Dashboard() {
   };
 
   const handleImport = async (importedTiles: any[]) => {
-    if (!user) return;
+    if (!user || !currentDashboardId) return;
 
     try {
       const maxOrderIndex = tiles.length > 0 ? Math.max(...tiles.map(t => t.order_index)) : -1;
       
       const tilesToInsert = importedTiles.map((tile, index) => ({
         user_id: user.id,
+        dashboard_id: currentDashboardId,
         title: tile.title || 'Untitled',
         content: tile.content || tile.text || '',
         color: tile.color || 'blue',
@@ -214,7 +245,7 @@ export default function Dashboard() {
 
       if (error) throw error;
 
-      queryClient.invalidateQueries({ queryKey: ['tiles', user?.id] });
+      queryClient.invalidateQueries({ queryKey: ['tiles', user?.id, currentDashboardId] });
     } catch (error) {
       toast({
         title: "Fout bij importeren",
@@ -240,6 +271,12 @@ export default function Dashboard() {
       <Header tiles={tiles} onImport={handleImport} />
       
       <div className="container mx-auto p-4">
+        <div className="mb-6">
+          <DashboardSelector
+            currentDashboardId={currentDashboardId}
+            onDashboardChange={setCurrentDashboardId}
+          />
+        </div>
         <div className="mb-6">
           <p className="text-muted-foreground mb-4">
             {t('dashboard.instruction')}

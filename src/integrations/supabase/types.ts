@@ -7,13 +7,37 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instanciate createClient with right options
+  // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
     PostgrestVersion: "13.0.4"
   }
   public: {
     Tables: {
+      dashboards: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
@@ -38,11 +62,42 @@ export type Database = {
         }
         Relationships: []
       }
+      shared_collections: {
+        Row: {
+          created_at: string
+          expires_at: string | null
+          id: string
+          name: string
+          share_token: string
+          tiles_data: Json
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          name: string
+          share_token?: string
+          tiles_data: Json
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          name?: string
+          share_token?: string
+          tiles_data?: Json
+          user_id?: string
+        }
+        Relationships: []
+      }
       tiles: {
         Row: {
           color: string
           content: string
           created_at: string
+          dashboard_id: string | null
           id: string
           order_index: number
           title: string
@@ -53,6 +108,7 @@ export type Database = {
           color?: string
           content: string
           created_at?: string
+          dashboard_id?: string | null
           id?: string
           order_index?: number
           title: string
@@ -63,20 +119,32 @@ export type Database = {
           color?: string
           content?: string
           created_at?: string
+          dashboard_id?: string | null
           id?: string
           order_index?: number
           title?: string
           updated_at?: string
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "tiles_dashboard_id_fkey"
+            columns: ["dashboard_id"]
+            isOneToOne: false
+            referencedRelation: "dashboards"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      migrate_tiles_to_default_dashboard: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never

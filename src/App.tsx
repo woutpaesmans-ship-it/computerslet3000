@@ -10,6 +10,7 @@ import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 import Donation from "./pages/Donation";
 import DonationSuccess from "./pages/DonationSuccess";
+import { SharedCollection } from "./pages/SharedCollection";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ const App = () => (
               <Route path="/auth" element={<Auth />} />
               <Route path="/donatie" element={<Donation />} />
               <Route path="/donatie-bedankt" element={<DonationSuccess />} />
+              <Route path="/shared/:token" element={<SharedCollection />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

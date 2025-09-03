@@ -3,7 +3,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { LogOut, Upload, Download, Heart, Languages } from 'lucide-react';
+import { LogOut, Heart, Languages } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Tile } from '@/types/tile';
 import {
@@ -12,6 +12,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { ShareDropdown } from './ShareDropdown';
 
 interface HeaderProps {
   tiles: Tile[];
@@ -40,59 +41,6 @@ export const Header = ({ tiles, onImport }: HeaderProps) => {
     }
   };
 
-  const exportTiles = () => {
-    const exportData = tiles.map(tile => ({
-      title: tile.title,
-      content: tile.content,
-      color: tile.color,
-    }));
-    
-    const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "computerslet_3000_tegels.json";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-
-    toast({
-      title: t('export.success'),
-      description: t('export.successDesc'),
-    });
-  };
-
-  const importTiles = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      try {
-        const importedData = JSON.parse(e.target?.result as string);
-        if (Array.isArray(importedData)) {
-          onImport(importedData);
-          toast({
-            title: t('import.success'),
-            description: `${importedData.length} ${t('import.successDesc')}`,
-          });
-        } else {
-          throw new Error(t('import.error'));
-        }
-      } catch (err) {
-        toast({
-          title: t('import.error'),
-          description: t('import.errorDesc'),
-          variant: "destructive",
-        });
-      }
-    };
-    reader.readAsText(file);
-    
-    // Reset the input value so the same file can be imported again
-    event.target.value = '';
-  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -115,34 +63,7 @@ export const Header = ({ tiles, onImport }: HeaderProps) => {
             <span className="hidden sm:inline">{t('header.support')}</span>
           </Button>
           
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={exportTiles}
-            className="hidden sm:flex items-center gap-2"
-          >
-            <Download className="h-4 w-4" />
-            {t('header.export')}
-          </Button>
-          
-          <div className="hidden sm:block">
-            <input
-              accept=".json"
-              id="import-file"
-              type="file"
-              className="hidden"
-              onChange={importTiles}
-            />
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => document.getElementById('import-file')?.click()}
-              className="flex items-center gap-2"
-            >
-              <Upload className="h-4 w-4" />
-              {t('header.import')}
-            </Button>
-          </div>
+          <ShareDropdown tiles={tiles} onImport={onImport} />
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
