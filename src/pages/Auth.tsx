@@ -22,6 +22,8 @@ export default function Auth() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [resetEmail, setResetEmail] = useState('');
+  const [resetLoading, setResetLoading] = useState(false);
   const { toast } = useToast();
   const { t, language, setLanguage } = useLanguage();
   const navigate = useNavigate();
@@ -106,6 +108,41 @@ export default function Auth() {
     }
   };
 
+  const handleResetPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setResetLoading(true);
+
+    try {
+      const redirectUrl = `${window.location.origin}/auth`;
+      
+      const { error } = await supabase.auth.resetPasswordForEmail(resetEmail, {
+        redirectTo: redirectUrl
+      });
+
+      if (error) {
+        toast({
+          title: t('auth.resetPasswordError'),
+          description: error.message,
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: t('auth.resetPasswordSuccess'),
+          description: t('auth.resetPasswordSuccessDesc'),
+        });
+        setResetEmail('');
+      }
+    } catch (error) {
+      toast({
+        title: t('common.error'),
+        description: t('common.error'),
+        variant: "destructive",
+      });
+    } finally {
+      setResetLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4">
       {/* Language Switcher */}
@@ -153,9 +190,10 @@ export default function Auth() {
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="login" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
+            <TabsList className="grid w-full grid-cols-3">
               <TabsTrigger value="login">{t('auth.login')}</TabsTrigger>
               <TabsTrigger value="signup">{t('auth.signup')}</TabsTrigger>
+              <TabsTrigger value="reset">{t('auth.resetPassword')}</TabsTrigger>
             </TabsList>
             
             <TabsContent value="login">
@@ -211,6 +249,25 @@ export default function Auth() {
                 </div>
                 <Button type="submit" className="w-full" disabled={loading}>
                   {loading ? t('donation.processing') : t('auth.signupButton')}
+                </Button>
+              </form>
+            </TabsContent>
+
+            <TabsContent value="reset">
+              <form onSubmit={handleResetPassword} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="reset-email">{t('auth.email')}</Label>
+                  <Input
+                    id="reset-email"
+                    type="email"
+                    value={resetEmail}
+                    onChange={(e) => setResetEmail(e.target.value)}
+                    required
+                    placeholder={t('auth.email')}
+                  />
+                </div>
+                <Button type="submit" className="w-full" disabled={resetLoading}>
+                  {resetLoading ? t('donation.processing') : t('auth.resetPasswordButton')}
                 </Button>
               </form>
             </TabsContent>

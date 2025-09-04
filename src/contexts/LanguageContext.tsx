@@ -43,6 +43,13 @@ const translations = {
     'auth.signupSuccessDesc': 'Controleer je e-mail voor bevestiging.',
     'auth.loginError': 'Fout bij inloggen',
     'auth.signupError': 'Fout bij registreren',
+    'auth.forgotPassword': 'Wachtwoord vergeten?',
+    'auth.resetPassword': 'Wachtwoord resetten',
+    'auth.resetPasswordButton': 'Reset instructies verzenden',
+    'auth.resetPasswordSuccess': 'Reset instructies verzonden',
+    'auth.resetPasswordSuccessDesc': 'Controleer je e-mail voor reset instructies',
+    'auth.resetPasswordError': 'Fout bij resetten wachtwoord',
+    'auth.backToLogin': 'Terug naar inloggen',
     
     // Dashboard
     'dashboard.loading': 'Laden...',
@@ -203,6 +210,13 @@ const translations = {
     'auth.signupSuccessDesc': 'Check your email for confirmation.',
     'auth.loginError': 'Login error',
     'auth.signupError': 'Registration error',
+    'auth.forgotPassword': 'Forgot password?',
+    'auth.resetPassword': 'Reset password',
+    'auth.resetPasswordButton': 'Send reset instructions',
+    'auth.resetPasswordSuccess': 'Reset instructions sent',
+    'auth.resetPasswordSuccessDesc': 'Check your email for reset instructions',
+    'auth.resetPasswordError': 'Password reset error',
+    'auth.backToLogin': 'Back to login',
     
     // Dashboard
     'dashboard.loading': 'Loading...',
@@ -363,6 +377,13 @@ const translations = {
     'auth.signupSuccessDesc': 'Vérifiez votre e-mail pour confirmation.',
     'auth.loginError': 'Erreur de connexion',
     'auth.signupError': 'Erreur d\'inscription',
+    'auth.forgotPassword': 'Mot de passe oublié?',
+    'auth.resetPassword': 'Réinitialiser le mot de passe',
+    'auth.resetPasswordButton': 'Envoyer les instructions',
+    'auth.resetPasswordSuccess': 'Instructions envoyées',
+    'auth.resetPasswordSuccessDesc': 'Vérifiez votre e-mail pour les instructions',
+    'auth.resetPasswordError': 'Erreur de réinitialisation',
+    'auth.backToLogin': 'Retour à la connexion',
     
     // Dashboard
     'dashboard.loading': 'Chargement...',
@@ -474,6 +495,13 @@ const translations = {
     'auth.signupSuccessDesc': 'Revisa tu correo para confirmación.',
     'auth.loginError': 'Error de inicio de sesión',
     'auth.signupError': 'Error de registro',
+    'auth.forgotPassword': '¿Olvidaste tu contraseña?',
+    'auth.resetPassword': 'Restablecer contraseña',
+    'auth.resetPasswordButton': 'Enviar instrucciones',
+    'auth.resetPasswordSuccess': 'Instrucciones enviadas',
+    'auth.resetPasswordSuccessDesc': 'Revisa tu email para las instrucciones',
+    'auth.resetPasswordError': 'Error al restablecer contraseña',
+    'auth.backToLogin': 'Volver al inicio de sesión',
     
     // Dashboard
     'dashboard.loading': 'Cargando...',
@@ -585,6 +613,13 @@ const translations = {
     'auth.signupSuccessDesc': 'Controlla la tua email per la conferma.',
     'auth.loginError': 'Errore di accesso',
     'auth.signupError': 'Errore di registrazione',
+    'auth.forgotPassword': 'Password dimenticata?',
+    'auth.resetPassword': 'Reimposta password',
+    'auth.resetPasswordButton': 'Invia istruzioni',
+    'auth.resetPasswordSuccess': 'Istruzioni inviate',
+    'auth.resetPasswordSuccessDesc': 'Controlla la tua email per le istruzioni',
+    'auth.resetPasswordError': 'Errore nel reset password',
+    'auth.backToLogin': 'Torna al login',
     
     // Dashboard
     'dashboard.loading': 'Caricamento...',
@@ -696,6 +731,13 @@ const translations = {
     'auth.signupSuccessDesc': 'Überprüfe deine E-Mail zur Bestätigung.',
     'auth.loginError': 'Anmeldefehler',
     'auth.signupError': 'Registrierungsfehler',
+    'auth.forgotPassword': 'Passwort vergessen?',
+    'auth.resetPassword': 'Passwort zurücksetzen',
+    'auth.resetPasswordButton': 'Anweisungen senden',
+    'auth.resetPasswordSuccess': 'Anweisungen gesendet',
+    'auth.resetPasswordSuccessDesc': 'Überprüfen Sie Ihre E-Mail für Anweisungen',
+    'auth.resetPasswordError': 'Fehler beim Zurücksetzen',
+    'auth.backToLogin': 'Zurück zur Anmeldung',
     
     // Dashboard
     'dashboard.loading': 'Lädt...',
