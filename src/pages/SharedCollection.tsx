@@ -51,7 +51,10 @@ export const SharedCollection = () => {
         .single();
 
       if (error) throw error;
-      return data as SharedCollectionData;
+      return {
+        ...data,
+        tiles_data: data.tiles_data as unknown as SharedTile[]
+      } as SharedCollectionData;
     },
     enabled: !!token,
     retry: false,

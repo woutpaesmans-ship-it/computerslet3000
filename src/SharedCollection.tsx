@@ -47,7 +47,7 @@ export const SharedCollection = () => {
       return {
         id: data.id,
         name: data.name,
-        tiles_data: data.tiles_data as SharedTile[],
+        tiles_data: data.tiles_data as unknown as SharedTile[],
         created_at: data.created_at,
       };
     },

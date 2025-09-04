@@ -5,7 +5,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Tile } from '@/types/tile';
-import { Dashboard } from '@/types/dashboard';
+import type { Dashboard } from '@/types/dashboard';
 import { TileCard } from './TileCard';
 import { TileForm } from './TileForm';
 import { Header } from './Header';
