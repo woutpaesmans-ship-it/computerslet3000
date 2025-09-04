@@ -23,7 +23,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Plus, Trash2 } from 'lucide-react';
+import { Plus, Trash2, Edit2 } from 'lucide-react';
 
 interface DashboardSelectorProps {
   currentDashboardId?: string;
@@ -36,7 +36,10 @@ export const DashboardSelector = ({ currentDashboardId, onDashboardChange }: Das
   const { t } = useLanguage();
   const queryClient = useQueryClient();
   const [showCreateDialog, setShowCreateDialog] = useState(false);
+  const [showRenameDialog, setShowRenameDialog] = useState(false);
+  const [renameDashboardId, setRenameDashboardId] = useState<string>('');
   const [newDashboardName, setNewDashboardName] = useState('');
+  const [renameDashboardName, setRenameDashboardName] = useState('');
 
   // Fetch dashboards
   const { data: dashboards = [], isLoading } = useQuery({
@@ -119,9 +122,52 @@ export const DashboardSelector = ({ currentDashboardId, onDashboardChange }: Das
     },
   });
 
+  // Rename dashboard mutation
+  const renameDashboardMutation = useMutation({
+    mutationFn: async ({ id, name }: { id: string; name: string }) => {
+      const { error } = await supabase
+        .from('dashboards')
+        .update({ name })
+        .eq('id', id);
+
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['dashboards', user?.id] });
+      setShowRenameDialog(false);
+      setRenameDashboardId('');
+      setRenameDashboardName('');
+      toast({
+        title: t('dashboard.renamed'),
+        description: t('dashboard.renamedDesc'),
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: t('dashboard.renameError'),
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
+
   const handleCreateDashboard = () => {
     if (!newDashboardName.trim()) return;
     createDashboardMutation.mutate(newDashboardName.trim());
+  };
+
+  const handleRenameDashboard = () => {
+    if (!renameDashboardName.trim() || !renameDashboardId) return;
+    renameDashboardMutation.mutate({
+      id: renameDashboardId,
+      name: renameDashboardName.trim()
+    });
+  };
+
+  const handleStartRename = (dashboard: Dashboard) => {
+    setRenameDashboardId(dashboard.id);
+    setRenameDashboardName(dashboard.name);
+    setShowRenameDialog(true);
   };
 
   const handleDeleteDashboard = (dashboardId: string) => {
@@ -160,20 +206,34 @@ export const DashboardSelector = ({ currentDashboardId, onDashboardChange }: Das
               <SelectItem key={dashboard.id} value={dashboard.id}>
                 <div className="flex items-center justify-between w-full">
                   <span>{dashboard.name}</span>
-                  {dashboards.length > 1 && (
+                  <div className="flex items-center gap-1">
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="h-4 w-4 p-0 ml-2 opacity-50 hover:opacity-100"
+                      className="h-4 w-4 p-0 opacity-50 hover:opacity-100"
                       onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        handleDeleteDashboard(dashboard.id);
+                        handleStartRename(dashboard);
                       }}
                     >
-                      <Trash2 className="h-3 w-3" />
+                      <Edit2 className="h-3 w-3" />
                     </Button>
-                  )}
+                    {dashboards.length > 1 && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-4 w-4 p-0 opacity-50 hover:opacity-100"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          handleDeleteDashboard(dashboard.id);
+                        }}
+                      >
+                        <Trash2 className="h-3 w-3" />
+                      </Button>
+                    )}
+                  </div>
                 </div>
               </SelectItem>
             ))}
@@ -226,6 +286,53 @@ export const DashboardSelector = ({ currentDashboardId, onDashboardChange }: Das
               disabled={!newDashboardName.trim() || createDashboardMutation.isPending}
             >
               {createDashboardMutation.isPending ? t('dashboard.creating') : t('dashboard.create')}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={showRenameDialog} onOpenChange={setShowRenameDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>{t('dashboard.renameTitle')}</DialogTitle>
+            <DialogDescription>
+              {t('dashboard.renameDesc')}
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="rename-dashboard-name">{t('dashboard.name')}</Label>
+              <Input
+                id="rename-dashboard-name"
+                value={renameDashboardName}
+                onChange={(e) => setRenameDashboardName(e.target.value)}
+                placeholder={t('dashboard.namePlaceholder')}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    handleRenameDashboard();
+                  }
+                }}
+              />
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button 
+              variant="outline" 
+              onClick={() => {
+                setShowRenameDialog(false);
+                setRenameDashboardId('');
+                setRenameDashboardName('');
+              }}
+            >
+              {t('dashboard.cancel')}
+            </Button>
+            <Button
+              onClick={handleRenameDashboard}
+              disabled={!renameDashboardName.trim() || renameDashboardMutation.isPending}
+            >
+              {renameDashboardMutation.isPending ? t('dashboard.creating') : t('dashboard.rename')}
             </Button>
           </DialogFooter>
         </DialogContent>

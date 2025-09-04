@@ -77,7 +77,7 @@ const translations = {
     'tile.saving': 'Bezig...',
     
     share: {
-      button: 'Delen',
+      button: 'Deel',
       createLink: 'Deelbare link maken',
       selectTiles: 'Selecteer tegels om te delen',
       selectTilesDesc: 'Kies welke tegels je wilt delen met anderen',
@@ -109,7 +109,7 @@ const translations = {
     },
     dashboard: {
       select: 'Selecteer dashboard',
-      new: 'Nieuw',
+      new: 'Nieuw dashboard',
       newTitle: 'Nieuw dashboard maken',
       newDesc: 'Geef je nieuwe dashboard een naam',
       name: 'Dashboard naam',
@@ -125,6 +125,12 @@ const translations = {
       deleteError: 'Fout bij verwijderen dashboard',
       cannotDelete: 'Kan niet verwijderen',
       cannotDeleteDesc: 'Je moet minstens één dashboard hebben',
+      rename: 'Hernoemen',
+      renameTitle: 'Dashboard hernoemen',
+      renameDesc: 'Geef je dashboard een nieuwe naam',
+      renamed: 'Dashboard hernoemd',
+      renamedDesc: 'Je dashboard naam is bijgewerkt',
+      renameError: 'Fout bij hernoemen dashboard',
     },
     'donation.title': 'Steun Computerslet 3000',
     'donation.description': 'Maakt de Computerslet 3000 jou ook zo gelukkig? Overweeg dan om je Computerpimp een fooi te geven. Zo kan hij ervoor zorgen dat je Computerslet 3000 haar werk zal blijven doen.',
@@ -245,7 +251,7 @@ const translations = {
     
     share: {
       button: 'Share',
-      createLink: 'Create shareable link',
+      createLink: 'Shareable link',
       selectTiles: 'Select tiles to share',
       selectTilesDesc: 'Choose which tiles you want to share with others',
       collectionName: 'Collection name',
@@ -276,7 +282,7 @@ const translations = {
     },
     dashboard: {
       select: 'Select dashboard',
-      new: 'New',
+      new: 'New dashboard',
       newTitle: 'Create new dashboard',
       newDesc: 'Give your new dashboard a name',
       name: 'Dashboard name',
@@ -292,6 +298,12 @@ const translations = {
       deleteError: 'Error deleting dashboard',
       cannotDelete: 'Cannot delete',
       cannotDeleteDesc: 'You must have at least one dashboard',
+      rename: 'Rename',
+      renameTitle: 'Rename dashboard',
+      renameDesc: 'Give your dashboard a new name',
+      renamed: 'Dashboard renamed',
+      renamedDesc: 'Your dashboard name has been updated',
+      renameError: 'Error renaming dashboard',
     },
     'donation.title': 'Support Computerslet 3000',
     'donation.description': 'Does Computerslet 3000 make you happy too? Consider giving your Computer pimp a tip. This way he can ensure that your Computerslet 3000 will continue to do her work.',
