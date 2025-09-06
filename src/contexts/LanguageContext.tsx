@@ -1070,18 +1070,24 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   }, [language]);
 
   const t = (key: string): string => {
-    const keys = key.split('.');
-    let value: any = translations[language];
-    
-    for (const k of keys) {
-      if (value && typeof value === 'object' && k in value) {
-        value = value[k];
-      } else {
-        return key; // fallback to key if not found
+    // Handle nested keys specifically for share and dashboard objects
+    if (key.startsWith('share.') || key.startsWith('dashboard.')) {
+      const keys = key.split('.');
+      let value: any = translations[language];
+      
+      for (const k of keys) {
+        if (value && typeof value === 'object' && k in value) {
+          value = value[k];
+        } else {
+          return key; // fallback to key if not found
+        }
       }
+      
+      return typeof value === 'string' ? value : key;
     }
     
-    return typeof value === 'string' ? value : key;
+    // For regular dot-separated keys, return direct lookup
+    return translations[language][key] || key;
   };
 
   return (
