@@ -1071,8 +1071,10 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   }, [language]);
 
   const t = (key: string): string => {
-    // Handle nested keys specifically for share and dashboard objects
-    if (key.startsWith('share.') || key.startsWith('dashboard.')) {
+    // Handle only specific nested keys that we actually have as objects
+    const nestedKeys = ['share.button', 'share.createLink', 'dashboard.new'];
+    
+    if (nestedKeys.includes(key)) {
       const keys = key.split('.');
       let value: any = translations[language];
       
@@ -1087,7 +1089,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       return typeof value === 'string' ? value : key;
     }
     
-    // For regular dot-separated keys, return direct lookup
+    // For all other keys, return direct lookup
     return translations[language][key] || key;
   };
 
