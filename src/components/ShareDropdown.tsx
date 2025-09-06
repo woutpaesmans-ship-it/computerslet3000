@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { TileSelectionDialog } from './TileSelectionDialog';
+import { ExportSelectionDialog } from './ExportSelectionDialog';
 
 interface ShareDropdownProps {
   tiles: Tile[];
@@ -21,28 +22,10 @@ export const ShareDropdown = ({ tiles, onImport }: ShareDropdownProps) => {
   const { toast } = useToast();
   const { t } = useLanguage();
   const [showTileSelection, setShowTileSelection] = useState(false);
+  const [showExportSelection, setShowExportSelection] = useState(false);
 
   const exportTiles = () => {
-    const exportData = tiles.map(tile => ({
-      title: tile.title,
-      content: tile.content,
-      color: tile.color,
-    }));
-    
-    const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "computerslet_3000_tegels.json";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-
-    toast({
-      title: t('export.success'),
-      description: t('export.successDesc'),
-    });
+    setShowExportSelection(true);
   };
 
   const importTiles = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -118,6 +101,12 @@ export const ShareDropdown = ({ tiles, onImport }: ShareDropdownProps) => {
         tiles={tiles}
         open={showTileSelection}
         onOpenChange={setShowTileSelection}
+      />
+
+      <ExportSelectionDialog
+        tiles={tiles}
+        open={showExportSelection}
+        onOpenChange={setShowExportSelection}
       />
     </>
   );

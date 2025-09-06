@@ -168,7 +168,9 @@ const translations = {
     
     // Export/Import
     'export.success': '📤 Export voltooid',
-    'export.successDesc': 'Je tegels zijn geëxporteerd naar een JSON-bestand.',
+    'export.successDesc': 'tegels geëxporteerd.',
+    'export.selectTiles': 'Selecteer tegels om te exporteren',
+    'export.selectTilesDesc': 'Kies welke tegels je wilt exporteren.',
     'import.success': '📥 Import voltooid',
     'import.successDesc': 'tegels geïmporteerd.',
     'import.error': 'Fout bij importeren',
@@ -341,7 +343,9 @@ const translations = {
     
     // Export/Import
     'export.success': '📤 Export completed',
-    'export.successDesc': 'Your tiles have been exported to a JSON file.',
+    'export.successDesc': 'tiles exported.',
+    'export.selectTiles': 'Select tiles to export',
+    'export.selectTilesDesc': 'Choose which tiles you want to export.',
     'import.success': '📥 Import completed',
     'import.successDesc': 'tiles imported.',
     'import.error': 'Import error',
@@ -516,7 +520,9 @@ const translations = {
     
     // Export/Import
     'export.success': '📤 Export terminé',
-    'export.successDesc': 'Vos tuiles ont été exportées vers un fichier JSON.',
+    'export.successDesc': 'tuiles exportées.',
+    'export.selectTiles': 'Sélectionner les tuiles à exporter',
+    'export.selectTilesDesc': 'Choisissez les tuiles que vous voulez exporter.',
     'import.success': '📥 Import terminé',
     'import.successDesc': 'tuiles importées.',
     'import.error': 'Erreur d\'importation',
@@ -691,7 +697,9 @@ const translations = {
     
     // Export/Import
     'export.success': '📤 Exportación completada',
-    'export.successDesc': 'Tus fichas han sido exportadas a un archivo JSON.',
+    'export.successDesc': 'fichas exportadas.',
+    'export.selectTiles': 'Seleccionar fichas para exportar',
+    'export.selectTilesDesc': 'Elige qué fichas quieres exportar.',
     'import.success': '📥 Importación completada',
     'import.successDesc': 'fichas importadas.',
     'import.error': 'Error de importación',
@@ -866,7 +874,9 @@ const translations = {
     
     // Export/Import
     'export.success': '📤 Esportazione completata',
-    'export.successDesc': 'Le tue tessere sono state esportate in un file JSON.',
+    'export.successDesc': 'tessere esportate.',
+    'export.selectTiles': 'Seleziona tessere da esportare',
+    'export.selectTilesDesc': 'Scegli quali tessere vuoi esportare.',
     'import.success': '📥 Importazione completata',
     'import.successDesc': 'tessere importate.',
     'import.error': 'Errore di importazione',
@@ -1041,7 +1051,9 @@ const translations = {
     
     // Export/Import
     'export.success': '📤 Export abgeschlossen',
-    'export.successDesc': 'Deine Kacheln wurden in eine JSON-Datei exportiert.',
+    'export.successDesc': 'Kacheln exportiert.',
+    'export.selectTiles': 'Kacheln zum Exportieren auswählen',
+    'export.selectTilesDesc': 'Wähle die Kacheln aus, die du exportieren möchtest.',
     'import.success': '📥 Import abgeschlossen',
     'import.successDesc': 'Kacheln importiert.',
     'import.error': 'Import-Fehler',
@@ -1060,7 +1072,6 @@ const translations = {
 };
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  console.log('LanguageProvider rendering'); // Debug log
   const [language, setLanguage] = useState<Language>(() => {
     const saved = localStorage.getItem('language');
     return (saved as Language) || 'nl';
@@ -1101,11 +1112,8 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 };
 
 export const useLanguage = () => {
-  console.log('useLanguage called, context:', LanguageContext); // Debug log
   const context = useContext(LanguageContext);
-  console.log('context value:', context); // Debug log
   if (context === undefined) {
-    console.error('LanguageContext is undefined - component not wrapped in LanguageProvider');
     throw new Error('useLanguage must be used within a LanguageProvider');
   }
   return context;
