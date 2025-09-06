@@ -1060,6 +1060,7 @@ const translations = {
 };
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  console.log('LanguageProvider rendering'); // Debug log
   const [language, setLanguage] = useState<Language>(() => {
     const saved = localStorage.getItem('language');
     return (saved as Language) || 'nl';
@@ -1098,8 +1099,11 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 };
 
 export const useLanguage = () => {
+  console.log('useLanguage called, context:', LanguageContext); // Debug log
   const context = useContext(LanguageContext);
+  console.log('context value:', context); // Debug log
   if (context === undefined) {
+    console.error('LanguageContext is undefined - component not wrapped in LanguageProvider');
     throw new Error('useLanguage must be used within a LanguageProvider');
   }
   return context;
