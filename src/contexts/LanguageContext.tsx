@@ -1083,7 +1083,16 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   const t = (key: string): string => {
     // Handle only specific nested keys that we actually have as objects
-    const nestedKeys = ['share.button', 'share.createLink', 'dashboard.new'];
+    const nestedKeys = [
+      'share.button', 'share.createLink', 'share.selectTiles', 'share.selectTilesDesc', 
+      'share.collectionName', 'share.collectionNamePlaceholder', 'share.selectAll', 
+      'share.deselectAll', 'share.selected', 'share.cancel', 'share.creating',
+      'share.success', 'share.successDesc', 'share.error', 'share.linkCreated',
+      'share.linkCreatedDesc', 'share.shareUrl', 'share.copy', 'share.copied',
+      'share.copiedDesc', 'share.copyError', 'share.copyErrorDesc', 'share.close',
+      'share.defaultName', 'share.loading', 'share.notFound', 'share.notFoundDesc',
+      'share.collectionDesc', 'share.noTiles', 'dashboard.new'
+    ];
     
     if (nestedKeys.includes(key)) {
       const keys = key.split('.');
