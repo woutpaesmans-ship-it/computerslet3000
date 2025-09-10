@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
+import { useState, useEffect } from 'react';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import {
   Dialog,
   DialogContent,
@@ -32,15 +33,38 @@ export const TileSelectionDialog = ({ tiles, dashboards, currentDashboardId, ope
   const { toast } = useToast();
   const { t } = useLanguage();
   const [selectedTiles, setSelectedTiles] = useState<string[]>([]);
+  const [selectedDashboard, setSelectedDashboard] = useState<string>(currentDashboardId);
   const [collectionName, setCollectionName] = useState('');
   const [shareUrl, setShareUrl] = useState('');
   const [copied, setCopied] = useState(false);
+
+  // Fetch tiles for selected dashboard
+  const { data: dashboardTiles = [] } = useQuery({
+    queryKey: ['tiles', user?.id, selectedDashboard],
+    queryFn: async () => {
+      if (!user || !selectedDashboard) return [];
+      
+      const { data, error } = await supabase
+        .from('tiles')
+        .select('*')
+        .eq('user_id', user.id)
+        .eq('dashboard_id', selectedDashboard)
+        .order('order_index', { ascending: true });
+
+      if (error) throw error;
+      return data as Tile[];
+    },
+    enabled: !!user && !!selectedDashboard,
+  });
+
+  // Use dashboard tiles instead of passed tiles
+  const tilesToDisplay = dashboardTiles;
 
   const createShareLinkMutation = useMutation({
     mutationFn: async () => {
       if (!user || selectedTiles.length === 0) throw new Error('No tiles selected');
 
-      const selectedTileData = tiles
+      const selectedTileData = tilesToDisplay
         .filter(tile => selectedTiles.includes(tile.id))
         .map(tile => ({
           title: tile.title,
@@ -114,6 +138,7 @@ export const TileSelectionDialog = ({ tiles, dashboards, currentDashboardId, ope
 
   const handleClose = () => {
     setSelectedTiles([]);
+    setSelectedDashboard(currentDashboardId);
     setCollectionName('');
     setShareUrl('');
     setCopied(false);
@@ -178,21 +203,37 @@ export const TileSelectionDialog = ({ tiles, dashboards, currentDashboardId, ope
             />
           </div>
 
+          <div>
+            <Label htmlFor="dashboard-select">{t('share.selectDashboard')}</Label>
+            <Select value={selectedDashboard} onValueChange={setSelectedDashboard}>
+              <SelectTrigger>
+                <SelectValue placeholder={t('share.selectDashboardDesc')} />
+              </SelectTrigger>
+              <SelectContent>
+                {dashboards.map((dashboard) => (
+                  <SelectItem key={dashboard.id} value={dashboard.id}>
+                    {dashboard.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
           <div className="flex items-center justify-between">
             <Button
               variant="outline"
               size="sm"
               onClick={handleSelectAll}
             >
-              {selectedTiles.length === tiles.length ? t('share.deselectAll') : t('share.selectAll')}
+              {selectedTiles.length === tilesToDisplay.length ? t('share.deselectAll') : t('share.selectAll')}
             </Button>
             <span className="text-sm text-muted-foreground">
-              {selectedTiles.length} / {tiles.length} {t('share.selected')}
+              {selectedTiles.length} / {tilesToDisplay.length} {t('share.selected')}
             </span>
           </div>
 
           <div className="max-h-60 overflow-y-auto space-y-2">
-            {tiles.map((tile) => (
+            {tilesToDisplay.map((tile) => (
               <div key={tile.id} className="flex items-center space-x-2">
                 <Checkbox
                   id={tile.id}
