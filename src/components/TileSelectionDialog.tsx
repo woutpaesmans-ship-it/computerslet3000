@@ -21,11 +21,13 @@ import { Copy, Check } from 'lucide-react';
 
 interface TileSelectionDialogProps {
   tiles: Tile[];
+  dashboards: any[];
+  currentDashboardId: string;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
-export const TileSelectionDialog = ({ tiles, open, onOpenChange }: TileSelectionDialogProps) => {
+export const TileSelectionDialog = ({ tiles, dashboards, currentDashboardId, open, onOpenChange }: TileSelectionDialogProps) => {
   const { user } = useAuth();
   const { toast } = useToast();
   const { t } = useLanguage();

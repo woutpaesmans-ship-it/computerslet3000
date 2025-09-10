@@ -16,10 +16,12 @@ import { ShareDropdown } from './ShareDropdown';
 
 interface HeaderProps {
   tiles: Tile[];
+  dashboards: any[];
+  currentDashboardId: string;
   onImport: (tiles: any[]) => void;
 }
 
-export const Header = ({ tiles, onImport }: HeaderProps) => {
+export const Header = ({ tiles, dashboards, currentDashboardId, onImport }: HeaderProps) => {
   const { user } = useAuth();
   const { toast } = useToast();
   const { t, language, setLanguage } = useLanguage();
@@ -63,7 +65,12 @@ export const Header = ({ tiles, onImport }: HeaderProps) => {
             <span className="hidden sm:inline">{t('header.support')}</span>
           </Button>
           
-          <ShareDropdown tiles={tiles} onImport={onImport} />
+        <ShareDropdown 
+          tiles={tiles} 
+          dashboards={dashboards}
+          currentDashboardId={currentDashboardId}
+          onImport={onImport} 
+        />
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

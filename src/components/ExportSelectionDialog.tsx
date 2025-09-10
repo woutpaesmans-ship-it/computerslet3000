@@ -16,11 +16,13 @@ import {
 
 interface ExportSelectionDialogProps {
   tiles: Tile[];
+  dashboards: any[];
+  currentDashboardId: string;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
-export const ExportSelectionDialog = ({ tiles, open, onOpenChange }: ExportSelectionDialogProps) => {
+export const ExportSelectionDialog = ({ tiles, dashboards, currentDashboardId, open, onOpenChange }: ExportSelectionDialogProps) => {
   const { toast } = useToast();
   const { t } = useLanguage();
   const [selectedTiles, setSelectedTiles] = useState<string[]>([]);

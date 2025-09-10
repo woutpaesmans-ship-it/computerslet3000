@@ -15,10 +15,12 @@ import { ExportSelectionDialog } from './ExportSelectionDialog';
 
 interface ShareDropdownProps {
   tiles: Tile[];
+  dashboards: any[];
+  currentDashboardId: string;
   onImport: (tiles: any[]) => void;
 }
 
-export const ShareDropdown = ({ tiles, onImport }: ShareDropdownProps) => {
+export const ShareDropdown = ({ tiles, dashboards, currentDashboardId, onImport }: ShareDropdownProps) => {
   const { toast } = useToast();
   const { t } = useLanguage();
   const [showTileSelection, setShowTileSelection] = useState(false);
@@ -99,12 +101,16 @@ export const ShareDropdown = ({ tiles, onImport }: ShareDropdownProps) => {
 
       <TileSelectionDialog
         tiles={tiles}
+        dashboards={dashboards}
+        currentDashboardId={currentDashboardId}
         open={showTileSelection}
         onOpenChange={setShowTileSelection}
       />
 
       <ExportSelectionDialog
         tiles={tiles}
+        dashboards={dashboards}
+        currentDashboardId={currentDashboardId}
         open={showExportSelection}
         onOpenChange={setShowExportSelection}
       />

@@ -268,7 +268,12 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-background/80">
-      <Header tiles={tiles} onImport={handleImport} />
+      <Header 
+        tiles={tiles} 
+        dashboards={dashboards}
+        currentDashboardId={currentDashboardId}
+        onImport={handleImport} 
+      />
       
       <div className="container mx-auto p-4">
         <div className="mb-6">
