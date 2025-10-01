@@ -50,6 +50,14 @@ const translations = {
     'auth.resetPasswordSuccessDesc': 'Controleer je e-mail voor reset instructies',
     'auth.resetPasswordError': 'Fout bij resetten wachtwoord',
     'auth.backToLogin': 'Terug naar inloggen',
+    'auth.newPassword': 'Nieuw wachtwoord',
+    'auth.confirmPassword': 'Bevestig wachtwoord',
+    'auth.updatePassword': 'Wachtwoord bijwerken',
+    'auth.updatePasswordButton': 'Wachtwoord bijwerken',
+    'auth.passwordsDoNotMatch': 'Wachtwoorden komen niet overeen',
+    'auth.passwordUpdated': 'Wachtwoord bijgewerkt',
+    'auth.passwordUpdatedDesc': 'Je wachtwoord is succesvol bijgewerkt',
+    'auth.passwordUpdateError': 'Fout bij bijwerken wachtwoord',
     
     // Dashboard
     'dashboard.loading': 'Laden...',
@@ -227,6 +235,14 @@ const translations = {
     'auth.resetPasswordSuccessDesc': 'Check your email for reset instructions',
     'auth.resetPasswordError': 'Password reset error',
     'auth.backToLogin': 'Back to login',
+    'auth.newPassword': 'New password',
+    'auth.confirmPassword': 'Confirm password',
+    'auth.updatePassword': 'Update password',
+    'auth.updatePasswordButton': 'Update password',
+    'auth.passwordsDoNotMatch': 'Passwords do not match',
+    'auth.passwordUpdated': 'Password updated',
+    'auth.passwordUpdatedDesc': 'Your password has been successfully updated',
+    'auth.passwordUpdateError': 'Password update error',
     
     // Dashboard
     'dashboard.loading': 'Loading...',
@@ -404,6 +420,14 @@ const translations = {
     'auth.resetPasswordSuccessDesc': 'Vérifiez votre e-mail pour les instructions',
     'auth.resetPasswordError': 'Erreur de réinitialisation',
     'auth.backToLogin': 'Retour à la connexion',
+    'auth.newPassword': 'Nouveau mot de passe',
+    'auth.confirmPassword': 'Confirmer le mot de passe',
+    'auth.updatePassword': 'Mettre à jour le mot de passe',
+    'auth.updatePasswordButton': 'Mettre à jour le mot de passe',
+    'auth.passwordsDoNotMatch': 'Les mots de passe ne correspondent pas',
+    'auth.passwordUpdated': 'Mot de passe mis à jour',
+    'auth.passwordUpdatedDesc': 'Votre mot de passe a été mis à jour avec succès',
+    'auth.passwordUpdateError': 'Erreur de mise à jour du mot de passe',
     
     // Dashboard
     'dashboard.loading': 'Chargement...',
@@ -604,6 +628,14 @@ const translations = {
     'auth.resetPasswordSuccessDesc': 'Revisa tu email para las instrucciones',
     'auth.resetPasswordError': 'Error al restablecer contraseña',
     'auth.backToLogin': 'Volver al inicio de sesión',
+    'auth.newPassword': 'Nueva contraseña',
+    'auth.confirmPassword': 'Confirmar contraseña',
+    'auth.updatePassword': 'Actualizar contraseña',
+    'auth.updatePasswordButton': 'Actualizar contraseña',
+    'auth.passwordsDoNotMatch': 'Las contraseñas no coinciden',
+    'auth.passwordUpdated': 'Contraseña actualizada',
+    'auth.passwordUpdatedDesc': 'Tu contraseña se ha actualizado correctamente',
+    'auth.passwordUpdateError': 'Error al actualizar contraseña',
     
     // Dashboard
     'dashboard.loading': 'Cargando...',
@@ -804,6 +836,14 @@ const translations = {
     'auth.resetPasswordSuccessDesc': 'Controlla la tua email per le istruzioni',
     'auth.resetPasswordError': 'Errore nel reset password',
     'auth.backToLogin': 'Torna al login',
+    'auth.newPassword': 'Nuova password',
+    'auth.confirmPassword': 'Conferma password',
+    'auth.updatePassword': 'Aggiorna password',
+    'auth.updatePasswordButton': 'Aggiorna password',
+    'auth.passwordsDoNotMatch': 'Le password non corrispondono',
+    'auth.passwordUpdated': 'Password aggiornata',
+    'auth.passwordUpdatedDesc': 'La tua password è stata aggiornata con successo',
+    'auth.passwordUpdateError': 'Errore nell\'aggiornamento della password',
     
     // Dashboard
     'dashboard.loading': 'Caricamento...',
@@ -1004,6 +1044,14 @@ const translations = {
     'auth.resetPasswordSuccessDesc': 'Überprüfen Sie Ihre E-Mail für Anweisungen',
     'auth.resetPasswordError': 'Fehler beim Zurücksetzen',
     'auth.backToLogin': 'Zurück zur Anmeldung',
+    'auth.newPassword': 'Neues Passwort',
+    'auth.confirmPassword': 'Passwort bestätigen',
+    'auth.updatePassword': 'Passwort aktualisieren',
+    'auth.updatePasswordButton': 'Passwort aktualisieren',
+    'auth.passwordsDoNotMatch': 'Passwörter stimmen nicht überein',
+    'auth.passwordUpdated': 'Passwort aktualisiert',
+    'auth.passwordUpdatedDesc': 'Ihr Passwort wurde erfolgreich aktualisiert',
+    'auth.passwordUpdateError': 'Fehler beim Aktualisieren des Passworts',
     
     // Dashboard
     'dashboard.loading': 'Lädt...',

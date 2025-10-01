@@ -25,17 +25,29 @@ export default function Auth() {
   const [resetEmail, setResetEmail] = useState('');
   const [resetLoading, setResetLoading] = useState(false);
   const [showResetForm, setShowResetForm] = useState(false);
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [isRecoveryMode, setIsRecoveryMode] = useState(false);
   const { toast } = useToast();
   const { t, language, setLanguage } = useLanguage();
   const navigate = useNavigate();
   const { user } = useAuth();
 
+  // Check if user is coming from a password recovery link
+  useEffect(() => {
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'PASSWORD_RECOVERY') {
+        setIsRecoveryMode(true);
+      }
+    });
+  }, []);
+
   // Redirect if already authenticated
   useEffect(() => {
-    if (user) {
+    if (user && !isRecoveryMode) {
       navigate('/');
     }
-  }, [user, navigate]);
+  }, [user, navigate, isRecoveryMode]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -144,6 +156,49 @@ export default function Auth() {
     }
   };
 
+  const handleUpdatePassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (newPassword !== confirmPassword) {
+      toast({
+        title: t('auth.passwordsDoNotMatch'),
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const { error } = await supabase.auth.updateUser({
+        password: newPassword
+      });
+
+      if (error) {
+        toast({
+          title: t('auth.passwordUpdateError'),
+          description: error.message,
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: t('auth.passwordUpdated'),
+          description: t('auth.passwordUpdatedDesc'),
+        });
+        setIsRecoveryMode(false);
+        navigate('/');
+      }
+    } catch (error) {
+      toast({
+        title: t('common.error'),
+        description: t('common.error'),
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4">
       {/* Language Switcher */}
@@ -186,114 +241,144 @@ export default function Auth() {
         <CardHeader className="text-center">
           <CardTitle className="text-2xl font-bold">{t('header.title')}</CardTitle>
           <CardDescription>
-            {t('auth.subtitle')}
+            {isRecoveryMode ? t('auth.updatePassword') : t('auth.subtitle')}
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Tabs defaultValue="login" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="login">{t('auth.login')}</TabsTrigger>
-              <TabsTrigger value="signup">{t('auth.signup')}</TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="login">
-              {!showResetForm ? (
-                <>
-                  <form onSubmit={handleLogin} className="space-y-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="email">{t('auth.email')}</Label>
-                      <Input
-                        id="email"
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                      />
+          {isRecoveryMode ? (
+            <form onSubmit={handleUpdatePassword} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="new-password">{t('auth.newPassword')}</Label>
+                <Input
+                  id="new-password"
+                  type="password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  required
+                  minLength={6}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="confirm-password">{t('auth.confirmPassword')}</Label>
+                <Input
+                  id="confirm-password"
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                  minLength={6}
+                />
+              </div>
+              <Button type="submit" className="w-full" disabled={loading}>
+                {loading ? t('donation.processing') : t('auth.updatePasswordButton')}
+              </Button>
+            </form>
+          ) : (
+            <Tabs defaultValue="login" className="w-full">
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="login">{t('auth.login')}</TabsTrigger>
+                <TabsTrigger value="signup">{t('auth.signup')}</TabsTrigger>
+              </TabsList>
+              
+              <TabsContent value="login">
+                {!showResetForm ? (
+                  <>
+                    <form onSubmit={handleLogin} className="space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="email">{t('auth.email')}</Label>
+                        <Input
+                          id="email"
+                          type="email"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          required
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="password">{t('auth.password')}</Label>
+                        <Input
+                          id="password"
+                          type="password"
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                          required
+                        />
+                      </div>
+                      <Button type="submit" className="w-full" disabled={loading}>
+                        {loading ? t('donation.processing') : t('auth.loginButton')}
+                      </Button>
+                    </form>
+                    <div className="mt-4 text-center">
+                      <button
+                        type="button"
+                        onClick={() => setShowResetForm(true)}
+                        className="text-sm text-primary hover:underline"
+                      >
+                        {t('auth.forgotPassword')}
+                      </button>
                     </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="password">{t('auth.password')}</Label>
-                      <Input
-                        id="password"
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                      />
+                  </>
+                ) : (
+                  <>
+                    <form onSubmit={handleResetPassword} className="space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="reset-email">{t('auth.email')}</Label>
+                        <Input
+                          id="reset-email"
+                          type="email"
+                          value={resetEmail}
+                          onChange={(e) => setResetEmail(e.target.value)}
+                          required
+                          placeholder={t('auth.email')}
+                        />
+                      </div>
+                      <Button type="submit" className="w-full" disabled={resetLoading}>
+                        {resetLoading ? t('donation.processing') : t('auth.resetPasswordButton')}
+                      </Button>
+                    </form>
+                    <div className="mt-4 text-center">
+                      <button
+                        type="button"
+                        onClick={() => setShowResetForm(false)}
+                        className="text-sm text-primary hover:underline"
+                      >
+                        {t('auth.backToLogin')}
+                      </button>
                     </div>
-                    <Button type="submit" className="w-full" disabled={loading}>
-                      {loading ? t('donation.processing') : t('auth.loginButton')}
-                    </Button>
-                  </form>
-                  <div className="mt-4 text-center">
-                    <button
-                      type="button"
-                      onClick={() => setShowResetForm(true)}
-                      className="text-sm text-primary hover:underline"
-                    >
-                      {t('auth.forgotPassword')}
-                    </button>
+                  </>
+                )}
+              </TabsContent>
+              
+              <TabsContent value="signup">
+                <form onSubmit={handleSignUp} className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="signup-email">{t('auth.email')}</Label>
+                    <Input
+                      id="signup-email"
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                    />
                   </div>
-                </>
-              ) : (
-                <>
-                  <form onSubmit={handleResetPassword} className="space-y-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="reset-email">{t('auth.email')}</Label>
-                      <Input
-                        id="reset-email"
-                        type="email"
-                        value={resetEmail}
-                        onChange={(e) => setResetEmail(e.target.value)}
-                        required
-                        placeholder={t('auth.email')}
-                      />
-                    </div>
-                    <Button type="submit" className="w-full" disabled={resetLoading}>
-                      {resetLoading ? t('donation.processing') : t('auth.resetPasswordButton')}
-                    </Button>
-                  </form>
-                  <div className="mt-4 text-center">
-                    <button
-                      type="button"
-                      onClick={() => setShowResetForm(false)}
-                      className="text-sm text-primary hover:underline"
-                    >
-                      {t('auth.backToLogin')}
-                    </button>
+                  <div className="space-y-2">
+                    <Label htmlFor="signup-password">{t('auth.password')}</Label>
+                    <Input
+                      id="signup-password"
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                      minLength={6}
+                    />
                   </div>
-                </>
-              )}
-            </TabsContent>
-            
-            <TabsContent value="signup">
-              <form onSubmit={handleSignUp} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="signup-email">{t('auth.email')}</Label>
-                  <Input
-                    id="signup-email"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="signup-password">{t('auth.password')}</Label>
-                  <Input
-                    id="signup-password"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                    minLength={6}
-                  />
-                </div>
-                <Button type="submit" className="w-full" disabled={loading}>
-                  {loading ? t('donation.processing') : t('auth.signupButton')}
-                </Button>
-              </form>
-            </TabsContent>
-          </Tabs>
+                  <Button type="submit" className="w-full" disabled={loading}>
+                    {loading ? t('donation.processing') : t('auth.signupButton')}
+                  </Button>
+                </form>
+              </TabsContent>
+            </Tabs>
+          )}
         </CardContent>
       </Card>
     </div>
