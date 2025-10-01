@@ -18,6 +18,28 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+// Helper function to translate Supabase error messages
+const translateError = (error: string, t: (key: string) => string): string => {
+  const errorMap: { [key: string]: string } = {
+    'Invalid login credentials': t('auth.error.invalidCredentials'),
+    'User already registered': t('auth.error.userExists'),
+    'Email not confirmed': t('auth.error.emailNotConfirmed'),
+    'Password should be at least 6 characters': t('auth.error.passwordTooShort'),
+    'Invalid email': t('auth.error.invalidEmail'),
+    'For security purposes, you can only request this': t('auth.error.rateLimited'),
+    'Email link is invalid or has expired': t('auth.error.linkExpired'),
+    'New password should be different': t('auth.error.samePassword'),
+  };
+
+  for (const [key, value] of Object.entries(errorMap)) {
+    if (error.includes(key)) {
+      return value;
+    }
+  }
+  
+  return error;
+};
+
 export default function Auth() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -62,7 +84,7 @@ export default function Auth() {
       if (error) {
         toast({
           title: t('auth.loginError'),
-          description: error.message,
+          description: translateError(error.message, t),
           variant: "destructive",
         });
       } else {
@@ -101,7 +123,7 @@ export default function Auth() {
       if (error) {
         toast({
           title: t('auth.signupError'),
-          description: error.message,
+          description: translateError(error.message, t),
           variant: "destructive",
         });
       } else {
@@ -135,7 +157,7 @@ export default function Auth() {
       if (error) {
         toast({
           title: t('auth.resetPasswordError'),
-          description: error.message,
+          description: translateError(error.message, t),
           variant: "destructive",
         });
       } else {
@@ -177,7 +199,7 @@ export default function Auth() {
       if (error) {
         toast({
           title: t('auth.passwordUpdateError'),
-          description: error.message,
+          description: translateError(error.message, t),
           variant: "destructive",
         });
       } else {

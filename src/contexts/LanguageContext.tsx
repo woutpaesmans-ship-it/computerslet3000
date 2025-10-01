@@ -59,6 +59,16 @@ const translations = {
     'auth.passwordUpdatedDesc': 'Je wachtwoord is succesvol bijgewerkt',
     'auth.passwordUpdateError': 'Fout bij bijwerken wachtwoord',
     
+    // Auth errors
+    'auth.error.invalidCredentials': 'Onjuiste inloggegevens',
+    'auth.error.userExists': 'Gebruiker al geregistreerd',
+    'auth.error.emailNotConfirmed': 'E-mail niet bevestigd',
+    'auth.error.passwordTooShort': 'Wachtwoord moet minimaal 6 tekens lang zijn',
+    'auth.error.invalidEmail': 'Ongeldig e-mailadres',
+    'auth.error.rateLimited': 'Te veel verzoeken. Probeer het later opnieuw',
+    'auth.error.linkExpired': 'Link is ongeldig of verlopen',
+    'auth.error.samePassword': 'Nieuw wachtwoord moet anders zijn dan het oude',
+    
     // Dashboard
     'dashboard.loading': 'Laden...',
     'dashboard.addTile': 'Nieuwe tegel toevoegen',
@@ -244,6 +254,16 @@ const translations = {
     'auth.passwordUpdatedDesc': 'Your password has been successfully updated',
     'auth.passwordUpdateError': 'Password update error',
     
+    // Auth errors
+    'auth.error.invalidCredentials': 'Invalid login credentials',
+    'auth.error.userExists': 'User already registered',
+    'auth.error.emailNotConfirmed': 'Email not confirmed',
+    'auth.error.passwordTooShort': 'Password must be at least 6 characters',
+    'auth.error.invalidEmail': 'Invalid email address',
+    'auth.error.rateLimited': 'Too many requests. Please try again later',
+    'auth.error.linkExpired': 'Link is invalid or has expired',
+    'auth.error.samePassword': 'New password must be different from the old one',
+    
     // Dashboard
     'dashboard.loading': 'Loading...',
     'dashboard.addTile': 'Add new tile',
@@ -428,6 +448,16 @@ const translations = {
     'auth.passwordUpdated': 'Mot de passe mis à jour',
     'auth.passwordUpdatedDesc': 'Votre mot de passe a été mis à jour avec succès',
     'auth.passwordUpdateError': 'Erreur de mise à jour du mot de passe',
+    
+    // Auth errors
+    'auth.error.invalidCredentials': 'Identifiants de connexion invalides',
+    'auth.error.userExists': 'Utilisateur déjà enregistré',
+    'auth.error.emailNotConfirmed': 'E-mail non confirmé',
+    'auth.error.passwordTooShort': 'Le mot de passe doit contenir au moins 6 caractères',
+    'auth.error.invalidEmail': 'Adresse e-mail invalide',
+    'auth.error.rateLimited': 'Trop de requêtes. Veuillez réessayer plus tard',
+    'auth.error.linkExpired': 'Le lien est invalide ou a expiré',
+    'auth.error.samePassword': 'Le nouveau mot de passe doit être différent de l\'ancien',
     
     // Dashboard
     'dashboard.loading': 'Chargement...',
@@ -637,6 +667,16 @@ const translations = {
     'auth.passwordUpdatedDesc': 'Tu contraseña se ha actualizado correctamente',
     'auth.passwordUpdateError': 'Error al actualizar contraseña',
     
+    // Auth errors
+    'auth.error.invalidCredentials': 'Credenciales de inicio de sesión inválidas',
+    'auth.error.userExists': 'Usuario ya registrado',
+    'auth.error.emailNotConfirmed': 'Correo electrónico no confirmado',
+    'auth.error.passwordTooShort': 'La contraseña debe tener al menos 6 caracteres',
+    'auth.error.invalidEmail': 'Dirección de correo electrónico inválida',
+    'auth.error.rateLimited': 'Demasiadas solicitudes. Inténtalo de nuevo más tarde',
+    'auth.error.linkExpired': 'El enlace no es válido o ha expirado',
+    'auth.error.samePassword': 'La nueva contraseña debe ser diferente de la anterior',
+    
     // Dashboard
     'dashboard.loading': 'Cargando...',
     'dashboard.addTile': 'Agregar nueva ficha',
@@ -845,6 +885,16 @@ const translations = {
     'auth.passwordUpdatedDesc': 'La tua password è stata aggiornata con successo',
     'auth.passwordUpdateError': 'Errore nell\'aggiornamento della password',
     
+    // Auth errors
+    'auth.error.invalidCredentials': 'Credenziali di accesso non valide',
+    'auth.error.userExists': 'Utente già registrato',
+    'auth.error.emailNotConfirmed': 'Email non confermata',
+    'auth.error.passwordTooShort': 'La password deve essere di almeno 6 caratteri',
+    'auth.error.invalidEmail': 'Indirizzo email non valido',
+    'auth.error.rateLimited': 'Troppe richieste. Riprova più tardi',
+    'auth.error.linkExpired': 'Il link non è valido o è scaduto',
+    'auth.error.samePassword': 'La nuova password deve essere diversa dalla precedente',
+    
     // Dashboard
     'dashboard.loading': 'Caricamento...',
     'dashboard.addTile': 'Aggiungi nuova tessera',
@@ -1052,6 +1102,16 @@ const translations = {
     'auth.passwordUpdated': 'Passwort aktualisiert',
     'auth.passwordUpdatedDesc': 'Ihr Passwort wurde erfolgreich aktualisiert',
     'auth.passwordUpdateError': 'Fehler beim Aktualisieren des Passworts',
+    
+    // Auth errors
+    'auth.error.invalidCredentials': 'Ungültige Anmeldedaten',
+    'auth.error.userExists': 'Benutzer bereits registriert',
+    'auth.error.emailNotConfirmed': 'E-Mail nicht bestätigt',
+    'auth.error.passwordTooShort': 'Passwort muss mindestens 6 Zeichen lang sein',
+    'auth.error.invalidEmail': 'Ungültige E-Mail-Adresse',
+    'auth.error.rateLimited': 'Zu viele Anfragen. Bitte versuchen Sie es später erneut',
+    'auth.error.linkExpired': 'Link ist ungültig oder abgelaufen',
+    'auth.error.samePassword': 'Neues Passwort muss sich vom alten unterscheiden',
     
     // Dashboard
     'dashboard.loading': 'Lädt...',
