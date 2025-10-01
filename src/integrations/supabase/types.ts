@@ -141,6 +141,15 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_shared_collection_by_token: {
+        Args: { p_share_token: string }
+        Returns: {
+          created_at: string
+          id: string
+          name: string
+          tiles_data: Json
+        }[]
+      }
       migrate_tiles_to_default_dashboard: {
         Args: Record<PropertyKey, never>
         Returns: undefined

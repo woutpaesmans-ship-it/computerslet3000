@@ -38,17 +38,16 @@ export const SharedCollection = () => {
       if (!token) throw new Error('No token provided');
 
       const { data, error } = await supabase
-        .from('shared_collections')
-        .select('id, name, tiles_data, created_at')
-        .eq('share_token', token)
-        .single();
+        .rpc('get_shared_collection_by_token', { p_share_token: token });
 
       if (error) throw error;
+      if (!data || data.length === 0) throw new Error('Collection not found or expired');
+      
       return {
-        id: data.id,
-        name: data.name,
-        tiles_data: data.tiles_data as unknown as SharedTile[],
-        created_at: data.created_at,
+        id: data[0].id,
+        name: data[0].name,
+        tiles_data: data[0].tiles_data as unknown as SharedTile[],
+        created_at: data[0].created_at,
       };
     },
     enabled: !!token,
