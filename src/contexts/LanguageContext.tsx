@@ -140,6 +140,7 @@ const translations = {
       created: 'Tegelverzameling gemaakt',
       createdDesc: 'Je nieuwe tegelverzameling is klaar',
       createError: 'Fout bij maken tegelverzameling',
+      delete: 'Verwijderen',
       deleted: 'Tegelverzameling verwijderd',
       deletedDesc: 'De tegelverzameling is verwijderd',
       deleteError: 'Fout bij verwijderen tegelverzameling',
@@ -335,6 +336,7 @@ const translations = {
       created: 'Tile collection created',
       createdDesc: 'Your new tile collection is ready',
       createError: 'Error creating tile collection',
+      delete: 'Delete',
       deleted: 'Tile collection deleted',
       deletedDesc: 'The tile collection has been deleted',
       deleteError: 'Error deleting tile collection',
@@ -551,6 +553,7 @@ const translations = {
       created: 'Collection de tuiles créée',
       createdDesc: 'Votre nouvelle collection de tuiles est prête',
       createError: 'Erreur lors de la création de la collection de tuiles',
+      delete: 'Supprimer',
       deleted: 'Collection de tuiles supprimée',
       deletedDesc: 'La collection de tuiles a été supprimée',
       deleteError: 'Erreur lors de la suppression de la collection de tuiles',
@@ -769,6 +772,7 @@ const translations = {
       created: 'Colección de fichas creada',
       createdDesc: 'Tu nueva colección de fichas está lista',
       createError: 'Error al crear colección de fichas',
+      delete: 'Eliminar',
       deleted: 'Colección de fichas eliminada',
       deletedDesc: 'La colección de fichas ha sido eliminada',
       deleteError: 'Error al eliminar colección de fichas',
@@ -987,6 +991,7 @@ const translations = {
       created: 'Collezione di tessere creata',
       createdDesc: 'La tua nuova collezione di tessere è pronta',
       createError: 'Errore nella creazione della collezione di tessere',
+      delete: 'Elimina',
       deleted: 'Collezione di tessere eliminata',
       deletedDesc: 'La collezione di tessere è stata eliminata',
       deleteError: 'Errore nell\'eliminazione della collezione di tessere',
@@ -1205,6 +1210,7 @@ const translations = {
       created: 'Kachelsammlung erstellt',
       createdDesc: 'Deine neue Kachelsammlung ist bereit',
       createError: 'Fehler beim Erstellen der Kachelsammlung',
+      delete: 'Löschen',
       deleted: 'Kachelsammlung gelöscht',
       deletedDesc: 'Die Kachelsammlung wurde gelöscht',
       deleteError: 'Fehler beim Löschen der Kachelsammlung',
@@ -1297,7 +1303,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       'share.copiedDesc', 'share.copyError', 'share.copyErrorDesc', 'share.close',
       'share.defaultName', 'share.loading', 'share.notFound', 'share.notFoundDesc',
       'share.collectionDesc', 'share.noTiles', 'export.selectDashboard', 'export.selectDashboardDesc',
-      'dashboard.new'
+      'dashboard.new', 'dashboard.delete', 'dashboard.rename'
     ];
     
     if (nestedKeys.includes(key)) {
