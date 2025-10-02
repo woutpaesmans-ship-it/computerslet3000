@@ -3,6 +3,7 @@ import { Tile } from '@/types/tile';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { GripVertical, Edit, Trash2, MessageSquare } from 'lucide-react';
@@ -15,6 +16,7 @@ interface TileCardProps {
 
 export const TileCard = ({ tile, onEdit, onDelete }: TileCardProps) => {
   const { toast } = useToast();
+  const { t } = useLanguage();
   const [isHovered, setIsHovered] = useState(false);
   
   const {
@@ -80,8 +82,8 @@ export const TileCard = ({ tile, onEdit, onDelete }: TileCardProps) => {
       ]);
       
       toast({
-        title: "✓ Tekst gekopieerd",
-        description: "Meerdere formaten: HTML, Markdown, RTF, plain text",
+        title: t('tile.copied'),
+        description: t('tile.copiedMultiFormat'),
       });
     } catch (err) {
       console.error('Failed to copy with modern API:', err);
@@ -118,8 +120,8 @@ export const TileCard = ({ tile, onEdit, onDelete }: TileCardProps) => {
         ]);
         
         toast({
-          title: "✓ Tekst gekopieerd",
-          description: "HTML en plain text gekopieerd",
+          title: t('tile.copied'),
+          description: t('tile.copiedHtmlPlain'),
         });
       } catch (fallbackErr) {
         // Ultimate fallback
@@ -136,8 +138,8 @@ export const TileCard = ({ tile, onEdit, onDelete }: TileCardProps) => {
         document.body.removeChild(tempInput);
         
         toast({
-          title: "✓ Tekst gekopieerd",
-          description: "Plain text gekopieerd",
+          title: t('tile.copied'),
+          description: t('tile.copiedPlain'),
         });
       }
     }
@@ -189,21 +191,21 @@ export const TileCard = ({ tile, onEdit, onDelete }: TileCardProps) => {
       // Show appropriate toast
       if (wasModified) {
         toast({
-          title: "⚠️ Let op: de tekst werd aangepast",
-          description: `SMS-veilige versie gekopieerd (${smsText.length}/1530 tekens)`,
+          title: t('tile.smsModified'),
+          description: `${t('tile.smsCopied')} (${smsText.length}/1530 ${t('tile.characters')})`,
           variant: "destructive"
         });
       } else {
         toast({
-          title: "✓ De tegel is gekopieerd",
-          description: `SMS-veilige versie gekopieerd (${smsText.length}/1530 tekens)`,
+          title: t('tile.smsCopied'),
+          description: `${t('tile.smsCopied')} (${smsText.length}/1530 ${t('tile.characters')})`,
         });
       }
     } catch (err) {
       console.error('Failed to copy SMS version:', err);
       toast({
-        title: "Kopiëren mislukt",
-        description: "Kon SMS-versie niet naar klembord kopiëren",
+        title: t('tile.copyFailed'),
+        description: t('tile.copyFailedDesc'),
         variant: "destructive"
       });
     }
@@ -211,7 +213,7 @@ export const TileCard = ({ tile, onEdit, onDelete }: TileCardProps) => {
 
   const handleDelete = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (confirm("Weet je zeker dat je deze tegel wilt verwijderen?")) {
+    if (confirm(t('tile.confirmDelete'))) {
       onDelete(tile.id);
     }
   };
@@ -242,7 +244,7 @@ export const TileCard = ({ tile, onEdit, onDelete }: TileCardProps) => {
               size="sm"
               className="h-6 w-6 p-0"
               onClick={copySmsVersion}
-              title="SMS-veilige versie kopiëren"
+              title={t('tile.copySms')}
             >
               <MessageSquare className="h-3 w-3" />
             </Button>
@@ -251,6 +253,7 @@ export const TileCard = ({ tile, onEdit, onDelete }: TileCardProps) => {
               size="sm"
               className="h-6 w-6 p-0"
               onClick={handleEdit}
+              title={t('tile.edit')}
             >
               <Edit className="h-3 w-3" />
             </Button>
@@ -259,6 +262,7 @@ export const TileCard = ({ tile, onEdit, onDelete }: TileCardProps) => {
               size="sm"
               className="h-6 w-6 p-0 text-destructive hover:text-destructive"
               onClick={handleDelete}
+              title={t('tile.deleteTooltip')}
             >
               <Trash2 className="h-3 w-3" />
             </Button>
