@@ -223,6 +223,14 @@ export const TileCard = ({ tile, onEdit, onDelete }: TileCardProps) => {
     onEdit(tile);
   };
 
+  // Check if this is the example tile and translate it
+  const isExampleTile = tile.title === 'Example' || tile.title === 'Voorbeeld' || 
+                        tile.title === 'Exemple' || tile.title === 'Ejemplo' || 
+                        tile.title === 'Esempio' || tile.title === 'Beispiel';
+  
+  const displayTitle = isExampleTile ? t('dashboard.exampleTitle') : tile.title;
+  const displayContent = isExampleTile ? t('dashboard.exampleContent') : tile.content;
+
   return (
     <Card
       ref={setNodeRef}
@@ -237,7 +245,7 @@ export const TileCard = ({ tile, onEdit, onDelete }: TileCardProps) => {
     >
       <CardContent className="p-4">
         <div className="flex items-start justify-between mb-2">
-          <h3 className="font-semibold text-sm text-card-foreground">{tile.title}</h3>
+          <h3 className="font-semibold text-sm text-card-foreground">{displayTitle}</h3>
           <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
             <Button
               variant="ghost"
@@ -277,7 +285,7 @@ export const TileCard = ({ tile, onEdit, onDelete }: TileCardProps) => {
         </div>
         <div 
           className="text-xs text-muted-foreground line-clamp-3"
-          dangerouslySetInnerHTML={{ __html: tile.content }}
+          dangerouslySetInnerHTML={{ __html: displayContent }}
         />
       </CardContent>
     </Card>

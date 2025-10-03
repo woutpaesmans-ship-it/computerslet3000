@@ -73,8 +73,8 @@ const translations = {
     'dashboard.loading': 'Laden...',
     'dashboard.addTile': 'Nieuwe tegel toevoegen',
     'dashboard.editTile': 'Tegel bewerken',
-    'dashboard.exampleTitle': 'Voorbeeld Tegel',
-    'dashboard.exampleContent': 'Dit is een voorbeeldtegel. Klik om te bewerken!',
+    'dashboard.exampleTitle': 'Voorbeeld',
+    'dashboard.exampleContent': 'Hey, je hebt zojuist je eerste tegel gekopieerd! Je kunt meer tegels toevoegen met aangepaste tekst en afbeeldingen om je repeterende werk/antwoorden/berichten veel gemakkelijker te kopiëren en plakken.',
     'dashboard.instruction': 'Klik op een tegel om de tekst te kopiëren. Gebruik ✏️ om te bewerken of 🗑️ om te verwijderen.',
     
     // Tile form
@@ -282,8 +282,8 @@ const translations = {
     'dashboard.loading': 'Loading...',
     'dashboard.addTile': 'Add new tile',
     'dashboard.editTile': 'Edit tile',
-    'dashboard.exampleTitle': 'Example Tile',
-    'dashboard.exampleContent': 'This is an example tile. Click to edit!',
+    'dashboard.exampleTitle': 'Example',
+    'dashboard.exampleContent': 'Hey, you just copied your first tile! You can add more tiles with custom text and images to make your repeating work/answers/messages way more easy to copy-paste.',
     'dashboard.instruction': 'Click on a tile to copy the text. Use ✏️ to edit or 🗑️ to delete.',
     
     // Tile form
@@ -491,8 +491,8 @@ const translations = {
     'dashboard.loading': 'Chargement...',
     'dashboard.addTile': 'Ajouter une nouvelle tuile',
     'dashboard.editTile': 'Modifier la tuile',
-    'dashboard.exampleTitle': 'Tuile d\'exemple',
-    'dashboard.exampleContent': 'Ceci est une tuile d\'exemple. Cliquez pour modifier !',
+    'dashboard.exampleTitle': 'Exemple',
+    'dashboard.exampleContent': 'Hé, vous venez de copier votre première tuile ! Vous pouvez ajouter plus de tuiles avec du texte et des images personnalisés pour faciliter la copie-coller de vos travaux/réponses/messages répétitifs.',
     'dashboard.instruction': 'Cliquez sur une tuile pour copier le texte. Utilisez ✏️ pour modifier ou 🗑️ pour supprimer.',
     
     // Tile form
@@ -723,8 +723,8 @@ const translations = {
     'dashboard.loading': 'Cargando...',
     'dashboard.addTile': 'Agregar nueva ficha',
     'dashboard.editTile': 'Editar ficha',
-    'dashboard.exampleTitle': 'Ficha de ejemplo',
-    'dashboard.exampleContent': 'Esta es una ficha de ejemplo. ¡Haz clic para editar!',
+    'dashboard.exampleTitle': 'Ejemplo',
+    'dashboard.exampleContent': '¡Oye, acabas de copiar tu primera ficha! Puedes agregar más fichas con texto e imágenes personalizadas para facilitar la copia y pegado de tu trabajo/respuestas/mensajes repetitivos.',
     'dashboard.instruction': 'Haz clic en una ficha para copiar el texto. Usa ✏️ para editar o 🗑️ para eliminar.',
     
     // Tile form
@@ -955,8 +955,8 @@ const translations = {
     'dashboard.loading': 'Caricamento...',
     'dashboard.addTile': 'Aggiungi nuova tessera',
     'dashboard.editTile': 'Modifica tessera',
-    'dashboard.exampleTitle': 'Tessera di esempio',
-    'dashboard.exampleContent': 'Questa è una tessera di esempio. Clicca per modificare!',
+    'dashboard.exampleTitle': 'Esempio',
+    'dashboard.exampleContent': 'Ehi, hai appena copiato la tua prima tessera! Puoi aggiungere più tessere con testo e immagini personalizzati per rendere molto più facile copiare-incollare il tuo lavoro/risposte/messaggi ripetitivi.',
     'dashboard.instruction': 'Clicca su una tessera per copiare il testo. Usa ✏️ per modificare o 🗑️ per eliminare.',
     
     // Tile form
@@ -1187,8 +1187,8 @@ const translations = {
     'dashboard.loading': 'Lädt...',
     'dashboard.addTile': 'Neue Kachel hinzufügen',
     'dashboard.editTile': 'Kachel bearbeiten',
-    'dashboard.exampleTitle': 'Beispielkachel',
-    'dashboard.exampleContent': 'Dies ist eine Beispielkachel. Klicke zum Bearbeiten!',
+    'dashboard.exampleTitle': 'Beispiel',
+    'dashboard.exampleContent': 'Hey, du hast gerade deine erste Kachel kopiert! Du kannst weitere Kacheln mit benutzerdefiniertem Text und Bildern hinzufügen, um das Kopieren und Einfügen deiner sich wiederholenden Arbeiten/Antworten/Nachrichten viel einfacher zu machen.',
     'dashboard.instruction': 'Klicke auf eine Kachel, um den Text zu kopieren. Verwende ✏️ zum Bearbeiten oder 🗑️ zum Löschen.',
     
     // Tile form
