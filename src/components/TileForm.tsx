@@ -91,14 +91,20 @@ export const TileForm = ({ tile, onSubmit, onCancel, loading }: TileFormProps) =
             <Label htmlFor="color">{t('tile.color')}</Label>
             <Select value={color} onValueChange={setColor}>
               <SelectTrigger>
-                <SelectValue />
+                <div className="flex items-center gap-2">
+                  <div 
+                    className="w-4 h-4 rounded-full border"
+                    style={{ backgroundColor: `hsl(var(--tile-${color}))` }}
+                  />
+                  <span className="capitalize">{color}</span>
+                </div>
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-popover z-[100]">
                 {TILE_COLORS.map((colorOption) => (
                   <SelectItem key={colorOption} value={colorOption}>
                     <div className="flex items-center gap-2">
                       <div 
-                        className="w-4 h-4 rounded-full border"
+                        className="w-4 h-4 rounded-full border border-border"
                         style={{ backgroundColor: `hsl(var(--tile-${colorOption}))` }}
                       />
                       <span className="capitalize">{colorOption}</span>
