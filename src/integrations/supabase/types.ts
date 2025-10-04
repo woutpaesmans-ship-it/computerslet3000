@@ -141,6 +141,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      generate_share_token: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
       get_shared_collection_by_token: {
         Args: { p_share_token: string }
         Returns: {
