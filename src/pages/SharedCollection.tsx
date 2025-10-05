@@ -45,15 +45,16 @@ export const SharedCollection = () => {
       if (!token) throw new Error('No token provided');
 
       const { data, error } = await supabase
-        .from('shared_collections')
-        .select('id, name, tiles_data, created_at')
-        .eq('share_token', token)
-        .single();
+        .rpc('get_shared_collection_by_token', { p_share_token: token });
 
       if (error) throw error;
+      const row = (data && Array.isArray(data) ? data[0] : null) as {
+        id: string; name: string; tiles_data: any; created_at: string;
+      } | null;
+      if (!row) throw new Error('Not found');
       return {
-        ...data,
-        tiles_data: data.tiles_data as unknown as SharedTile[]
+        ...row,
+        tiles_data: row.tiles_data as unknown as SharedTile[]
       } as SharedCollectionData;
     },
     enabled: !!token,
