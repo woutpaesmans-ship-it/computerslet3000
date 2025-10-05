@@ -11,6 +11,8 @@ import { useAuth } from '@/hooks/useAuth';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useEffect } from 'react';
 import { Languages } from 'lucide-react';
+import { FcGoogle } from 'react-icons/fc';
+import { FaFacebook } from 'react-icons/fa';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -178,6 +180,33 @@ export default function Auth() {
     }
   };
 
+  const handleOAuthLogin = async (provider: 'google' | 'facebook') => {
+    try {
+      const redirectUrl = `${window.location.origin}/`;
+      
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider,
+        options: {
+          redirectTo: redirectUrl,
+        },
+      });
+
+      if (error) {
+        toast({
+          title: t('auth.loginError'),
+          description: translateError(error.message, t),
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: t('common.error'),
+        description: t('common.error'),
+        variant: "destructive",
+      });
+    }
+  };
+
   const handleUpdatePassword = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -330,6 +359,37 @@ export default function Auth() {
                         {loading ? t('donation.processing') : t('auth.loginButton')}
                       </Button>
                     </form>
+                    
+                    <div className="relative my-4">
+                      <div className="absolute inset-0 flex items-center">
+                        <span className="w-full border-t" />
+                      </div>
+                      <div className="relative flex justify-center text-xs uppercase">
+                        <span className="bg-background px-2 text-muted-foreground">of</span>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="w-full"
+                        onClick={() => handleOAuthLogin('google')}
+                      >
+                        <FcGoogle className="mr-2 h-5 w-5" />
+                        Login met Google
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="w-full"
+                        onClick={() => handleOAuthLogin('facebook')}
+                      >
+                        <FaFacebook className="mr-2 h-5 w-5 text-[#1877F2]" />
+                        Login met Facebook
+                      </Button>
+                    </div>
+
                     <div className="mt-4 text-center">
                       <button
                         type="button"
@@ -398,6 +458,36 @@ export default function Auth() {
                     {loading ? t('donation.processing') : t('auth.signupButton')}
                   </Button>
                 </form>
+                
+                <div className="relative my-4">
+                  <div className="absolute inset-0 flex items-center">
+                    <span className="w-full border-t" />
+                  </div>
+                  <div className="relative flex justify-center text-xs uppercase">
+                    <span className="bg-background px-2 text-muted-foreground">of</span>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="w-full"
+                    onClick={() => handleOAuthLogin('google')}
+                  >
+                    <FcGoogle className="mr-2 h-5 w-5" />
+                    Registreer met Google
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="w-full"
+                    onClick={() => handleOAuthLogin('facebook')}
+                  >
+                    <FaFacebook className="mr-2 h-5 w-5 text-[#1877F2]" />
+                    Registreer met Facebook
+                  </Button>
+                </div>
               </TabsContent>
             </Tabs>
           )}
