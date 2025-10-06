@@ -59,16 +59,28 @@ export default function Auth() {
 
   // Check if user is coming from a password recovery link
   useEffect(() => {
-    supabase.auth.onAuthStateChange((event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
       if (event === 'PASSWORD_RECOVERY') {
         setIsRecoveryMode(true);
+        setTimeout(() => {
+          if (window.location.hash.includes('type=recovery')) {
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+          }
+        }, 0);
       }
     });
+
+    if (typeof window !== 'undefined' && window.location.hash.includes('type=recovery')) {
+      setIsRecoveryMode(true);
+    }
+
+    return () => subscription.unsubscribe();
   }, []);
 
   // Redirect if already authenticated
   useEffect(() => {
-    if (user && !isRecoveryMode) {
+    const isRecoveryHash = typeof window !== 'undefined' && window.location.hash.includes('type=recovery');
+    if (user && !isRecoveryMode && !isRecoveryHash) {
       navigate('/');
     }
   }, [user, navigate, isRecoveryMode]);
