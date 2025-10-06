@@ -11,8 +11,6 @@ import { useAuth } from '@/hooks/useAuth';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useEffect } from 'react';
 import { Languages } from 'lucide-react';
-
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -59,28 +57,16 @@ export default function Auth() {
 
   // Check if user is coming from a password recovery link
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
+    supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'PASSWORD_RECOVERY') {
         setIsRecoveryMode(true);
-        setTimeout(() => {
-          if (window.location.hash.includes('type=recovery')) {
-            history.replaceState(null, '', window.location.pathname + window.location.search);
-          }
-        }, 0);
       }
     });
-
-    if (typeof window !== 'undefined' && window.location.hash.includes('type=recovery')) {
-      setIsRecoveryMode(true);
-    }
-
-    return () => subscription.unsubscribe();
   }, []);
 
   // Redirect if already authenticated
   useEffect(() => {
-    const isRecoveryHash = typeof window !== 'undefined' && window.location.hash.includes('type=recovery');
-    if (user && !isRecoveryMode && !isRecoveryHash) {
+    if (user && !isRecoveryMode) {
       navigate('/');
     }
   }, [user, navigate, isRecoveryMode]);
@@ -191,7 +177,6 @@ export default function Auth() {
       setResetLoading(false);
     }
   };
-
 
   const handleUpdatePassword = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -345,9 +330,6 @@ export default function Auth() {
                         {loading ? t('donation.processing') : t('auth.loginButton')}
                       </Button>
                     </form>
-                    
-
-
                     <div className="mt-4 text-center">
                       <button
                         type="button"
@@ -416,8 +398,6 @@ export default function Auth() {
                     {loading ? t('donation.processing') : t('auth.signupButton')}
                   </Button>
                 </form>
-                
-
               </TabsContent>
             </Tabs>
           )}
