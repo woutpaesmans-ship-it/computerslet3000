@@ -11,6 +11,20 @@ import NotFound from "./pages/NotFound";
 import Donation from "./pages/Donation";
 import DonationSuccess from "./pages/DonationSuccess";
 import { SharedCollection } from "./pages/SharedCollection";
+import { useEffect } from "react";
+
+// Redirect recovery hash to /auth so Supabase can process it
+const HashRecoveryRedirect = () => {
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const { hash, pathname, origin } = window.location;
+    if (hash && /type=recovery/.test(hash) && pathname !== '/auth') {
+      // Use full reload to let Supabase parse the hash on load
+      window.location.replace(`${origin}/auth${hash}`);
+    }
+  }, []);
+  return null;
+};
 
 const queryClient = new QueryClient();
 
@@ -21,6 +35,7 @@ const App = () => (
         <TooltipProvider>
           <Toaster />
           <Sonner />
+          <HashRecoveryRedirect />
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Index />} />
